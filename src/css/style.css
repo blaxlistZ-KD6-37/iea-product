@@ -1,0 +1,51 @@
+/* ===============
+ * FONTS
+ *============== */
+
+/*===============
+ * VARIABLES
+ *============== */
+:root {
+  /* Backgrounds */
+  --color-bg-main: #EBA83A;
+
+  /* Texts */
+  --color-font-main: #9C1602;
+  --color-font-secondary: #FFF8D9;
+  /* --typography-headings: "AmaticSC_Bold";
+  --typography-body: "Merriweather_Regular";
+  --typography-captions: "Josefin_SlabRegular";
+  --typography-notes: "Satisfy_Regular"; */
+}
+
+/*===============
+ * GLOBAL STYLES
+ *=============== */
+*,
+::before,
+::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--color-bg-main);
+  color: var(--color-font-main);
+  /* font-family: var(--typography-body); */
+  font-size: 1.25rem;
+  /* overflow-x: hidden; */
+}
+
+main{
+  align-items: center;
+}
+
+/*===============
+ * Frameworks
+ *============== */
+ .frameworks {
+  max-width: 20ch;
+  min-height: 20ch;
+  margin-inline: auto;
+ }
