@@ -7,11 +7,11 @@
  *============== */
 :root {
   /* Backgrounds */
-  --color-bg-main: #EBA83A;
+  --color-bg-main: #eba83a;
 
   /* Texts */
-  --color-font-main: #9C1602;
-  --color-font-secondary: #FFF8D9;
+  --color-font-main: #9c1602;
+  --color-font-secondary: #fff8d9;
   /* --typography-headings: "AmaticSC_Bold";
   --typography-body: "Merriweather_Regular";
   --typography-captions: "Josefin_SlabRegular";
@@ -37,15 +37,28 @@ body {
   /* overflow-x: hidden; */
 }
 
-main{
+header {
+  background-color: var(--color-font-main);
+  position: fixed;
+  min-height: 3ch;
+  min-width: 500ch;
+}
+
+main {
   align-items: center;
 }
 
 /*===============
  * Frameworks
  *============== */
- .frameworks {
-  max-width: 20ch;
-  min-height: 20ch;
+.frameworks {
+  max-width: 15ch;
+  min-height: 15ch;
   margin-inline: auto;
- }
+  color: var(--color-font-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  text-transform: uppercase;
+}
