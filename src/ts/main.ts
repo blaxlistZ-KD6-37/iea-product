@@ -27,3 +27,21 @@ pivot_vec.addEventListener("click", () => {
     frame_parent.classList.toggle("-z-50");
   });
 });
+
+const price_val = <HTMLDivElement>document.querySelector(".price-val");
+
+async function fetchPrice(): Promise<void> {
+  try {
+    const response = await fetch("http://localhost:8080/api/product/price");
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    price_val.innerHTML = `${data.price}`;
+  } catch (error) {
+    console.error("Error fetching price:", error);
+    price_val.innerHTML = "Error loading price";
+  }
+}
+
+fetchPrice();
