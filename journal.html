@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="dummy" />
+    <meta name="author" content="blaxlistZ" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="refresh" content="4680" />
+    <title>Journal Transaction</title>
+    <!-- Cascading Style Sheet -->
+    <link rel="stylesheet" href="./src/css/output.css" />
+    <link rel="stylesheet" href="./src/css/style.css" />
+    <!-- CSS.GG -->
+    <!-- <link href="https://css.gg/css" rel="stylesheet" /> -->
+    <!-- Font Awesome -->
+    <script
+      src="https://kit.fontawesome.com/4f7e7a7341.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Boxicons -->
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+  </head>
+  <body>
+    <!-- START OF HEADER BAR -->
+    <header>
+      <section class="bar-a"></section>
+      <section class="bar-b"></section>
+    </header>
+    <!-- END OF HEADER BAR -->
+
+    <!-- START OF TITLE -->
+    <article id="journal-title" class="text-center p-2">
+      General Journal
+    </article>
+    <!-- END OF TITLE -->
+
+    <!-- START OF CLOSING BAR -->
+    <div id="wrapper-close" class="mb-10">
+      <div class="closing-bar"></div>
+      <div class="closing-bar"></div>
+      <div class="closing-bar"></div>
+      <div class="closing-bar"></div>
+    </div>
+    <!-- END OF CLOSING BAR -->
+
+    <main id="main-frame">
+      <!-- START OF PSEUDO JOURNAL TABLE -->
+      <div class="journal-wrapper flex flex-wrap flex-row">
+        <!-- START OF JOURNAL HEAD -->
+        <section
+          id="journal-head"
+          class="grid bg-yellow-100 gap-4 min-h-12 items-center p-1 outline outline-2 outline-orange-300"
+        >
+          <div class="journal-type">Date</div>
+          <div class="journal-type">Account</div>
+          <div class="journal-type">Debit</div>
+          <div class="journal-type">Credit</div>
+        </section>
+        <!-- END OF JOURNAL HEAD -->
+
+        <!-- START OF JOURNAL YEAR -->
+        <section
+          class="journal-year bg-yellow-100 text-center p-1 text-3xl outline outline-2 outline-orange-300"
+        >
+          <time datetime="2024">2024</time>
+        </section>
+        <!-- END OF JOURNAL YEAR -->
+
+        <!-- START OF JOURNAL ENTRY -->
+        <section class="journal-entry grid">
+          <div
+            class="entry-wrapper bg-yellow-100 grid gap-4 items-center outline outline-2 outline-orange-300"
+          >
+            <time datetime="2024-09-01" class="day-month">Sep. 1</time>
+            <div class="account-debit">Cash</div>
+            <div class="debit">&#8369;255.00</div>
+            <div></div>
+            <div></div>
+            <div class="account-credit">Sales Revenue</div>
+            <div></div>
+            <div class="credit">&#8369;255.00</div>
+            <div></div>
+            <div class="account-debit">Item Expenses</div>
+            <div class="debit">&#8369;100.00</div>
+            <div></div>
+            <div></div>
+            <div class="account-credit">Accounts Payable</div>
+            <div></div>
+            <div class="credit">&#8369;100.00</div>
+          </div>
+          <div
+            class="entry-wrapper bg-yellow-100 grid gap-4 items-center outline outline-2 outline-orange-300"
+          >
+            <time datetime="2024-09-02" class="day-month">Sep. 2</time>
+            <div class="account-debit">Cash</div>
+            <div class="debit">&#8369;255.00</div>
+            <div></div>
+            <div></div>
+            <div class="account-credit">Sales Revenue</div>
+            <div></div>
+            <div class="credit">&#8369;255.00</div>
+          </div>
+        </section>
+        <!-- END OF JOURNAL ENTRY -->
+      </div>
+      <!-- END OF PSEUDO JOURNAL TABLE -->
+    </main>
+    <!-- TypeScript -->
+    <script type="module" src="./src/ts/journal.ts"></script>
+  </body>
+</html>
+
+<!-- <table class="flex flex-wrap align-middle justify-center">
+        <tr
+          class="journal-row bg-yellow-50 p-1 outline-2 outline outline-orange-100"
+          align="left"
+        >
+          <th>Date</th>
+          <th>Accounts</th>
+          <th>Debit</th>
+          <th>Credit</th>
+        </tr>
+        <tr class="journal-row p-1" align="left">
+          <td>
+            <time class="date-item" datetime="20024-09-01">09/01/2024</time>
+          </td>
+          <td>
+            <div>
+              <div class="debit-item bg-slate-800">Cash</div>
+              <div class="credit-item">
+                &nbsp;&nbsp;&nbsp;&nbsp;Sales Revenue
+              </div>
+              <div class="debit-item">Item Expenses</div>
+              <div class="credit-item">&nbsp;&nbsp;&nbsp;&nbsp;Cash</div>
+            </div>
+          </td>
+          <td>
+            <div class="debited bg-slate-800">
+              <span>&#8369;</span> <span>255.00</span>
+            </div>
+            <div>-</div>
+            <div class="credited"><span>&#8369;</span> <span>100.00</span></div>
+            <div>-</div>
+          </td>
+          <td>
+            <div>-</div>
+            <div><span>&#8369;</span> <span>255.00</span></div>
+            <div>-</div>
+            <div><span>&#8369;</span> <span>100.00</span></div>
+          </td>
+        </tr>
+</table> -->
