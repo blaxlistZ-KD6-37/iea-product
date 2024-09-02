@@ -67,7 +67,9 @@ func main() {
 	// Registering the "/runlive" path with the handlerReady function
 	A1_rtr.Get("/runlive", handlerReady)
 
-	A1_rtr.Get("/runlive/product/name", database_handler.handlerProductName)
+	A1_rtr.Get("/runlive/account", database_handler.handlerAccount)
+	A1_rtr.Get("/runlive/transaction", database_handler.handlerTransaction)
+	A1_rtr.Get("/runlive/transaction_detail", database_handler.handlerTransactionDetail)
 
 	// Mounting the A1_rtr router under the "/A1_" path prefix
 	router.Mount("/A1_", A1_rtr)

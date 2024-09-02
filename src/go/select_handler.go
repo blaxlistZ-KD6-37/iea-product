@@ -7,15 +7,50 @@ import (
 	"net/http"
 )
 
-func (dat *db_handler_st) handlerProductName(w http.ResponseWriter, r *http.Request) {
-	name := dat.SelectionDatabase("name", "product")
+func (dat *db_handler_st) handlerAccount(w http.ResponseWriter, r *http.Request) {
+	account_id, name, category :=
+		dat.selectionDatabase("account_id", "account"),
+		dat.selectionDatabase("name", "account"),
+		dat.selectionDatabase("category", "account")
 
 	respondWithJSON(w, http.StatusOK, map[string]interface{}{
-		"name": name,
+		"account_id":       account_id,
+		"account_name":     name,
+		"account_category": category,
 	})
 }
 
-func (dat *db_handler_st) SelectionDatabase(col, table string) []string {
+func (dat *db_handler_st) handlerTransaction(w http.ResponseWriter, r *http.Request) {
+	transaction_id, date, description :=
+		dat.selectionDatabase("transaction_id", "transaction_tab"),
+		dat.selectionDatabase("date", "transaction_tab"),
+		dat.selectionDatabase("description", "transaction_tab")
+
+	respondWithJSON(w, http.StatusOK, map[string]interface{}{
+		"transaction_id":          transaction_id,
+		"transaction_date":        date,
+		"transaction_description": description,
+	})
+}
+
+func (dat *db_handler_st) handlerTransactionDetail(w http.ResponseWriter, r *http.Request) {
+	transaction_detail_id, transaction_id, account_id, amount, is_debit :=
+		dat.selectionDatabase("transaction_detail_id", "transaction_detail"),
+		dat.selectionDatabase("transaction_id", "transaction_detail"),
+		dat.selectionDatabase("account_id", "transaction_detail"),
+		dat.selectionDatabase("amount", "transaction_detail"),
+		dat.selectionDatabase("is_debit", "transaction_detail")
+
+	respondWithJSON(w, http.StatusOK, map[string]interface{}{
+		"transaction_detail_id": transaction_detail_id,
+		"transaction_id_fk":     transaction_id,
+		"account_id_fk":         account_id,
+		"amount":                amount,
+		"is_debit":              is_debit,
+	})
+}
+
+func (dat *db_handler_st) selectionDatabase(col, table string) []string {
 	var elements []string
 	formatted_value := fmt.Sprintf("SELECT %s FROM %s", col, table)
 
