@@ -45,8 +45,8 @@ func (dat *db_handler_st) handlerTransactionDetail(w http.ResponseWriter, r *htt
 		"transaction_detail_id": transaction_detail_id,
 		"transaction_id_fk":     transaction_id,
 		"account_id_fk":         account_id,
-		"amount":                amount,
-		"is_debit":              is_debit,
+		"transaction_amount":    amount,
+		"transaction_is_debit":  is_debit,
 	})
 }
 
