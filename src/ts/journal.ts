@@ -1,24 +1,27 @@
-const price_val = <HTMLDivElement>document.querySelector(".price-val");
+import api from "./api";
+import { Database_Types } from "./database_types";
 
-async function fetchTransaction(): Promise<void> {
-  try {
-    const response = await fetch(
-      "http://localhost:8080/A1_/runlive/transaction_detail"
-    );
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const k = 5;
-    const data = await response.json();
-    price_val.innerHTML = ` (Key: ${data.transaction_detail_id[k]}),
-                                        (Transaction ID: ${data.transaction_id_fk[k]}),
-                                        (Account ID: ${data.account_id_fk[k]}),
-                                        (Amount: ${data.amount[k]}),
-                                        (Debit: ${data.is_debit[k]})`;
-  } catch (error) {
-    console.error("Error fetching price:", error);
-    price_val.innerHTML = "Error loading price";
-  }
-}
+type Account = Pick<
+  Database_Types,
+  "account_id" | "account_name" | "account_category"
+>;
 
-fetchTransaction();
+type Transaction_Tab = Pick<
+  Database_Types,
+  "transaction_id" | "transaction_date" | "transaction_description"
+>;
+
+type Transaction_Detail = Pick<
+  Database_Types,
+  | "transaction_detail_id"
+  | "account_id_fk"
+  | "transaction_id_fk"
+  | "transaction_amount"
+  | "transaction_is_debit"
+>;
+
+const account_ob = await api.GetDB<Account>("account");
+const transaction_ob = await api.GetDB<Transaction_Tab>("transaction");
+const transaction_detail_ob = await api.GetDB<Transaction_Detail>(
+  "transaction_detail"
+);
