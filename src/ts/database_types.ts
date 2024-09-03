@@ -1,13 +1,13 @@
 export interface Database_Types {
-  account_id: number[];
+  account_id: string[];
   account_name: string[];
   account_category: string[];
-  transaction_id: number[];
-  transaction_date: Date[];
+  transaction_id: string[];
+  transaction_date: string[];
   transaction_description: string[];
-  transaction_detail_id: number[];
-  account_id_fk: number[];
-  transaction_id_fk: number[];
-  transaction_amount: number[];
-  transaction_is_debit: boolean[];
+  transaction_detail_id: string[];
+  account_id_fk: string[];
+  transaction_id_fk: string[];
+  transaction_amount: string[];
+  transaction_is_debit: string[];
 }
