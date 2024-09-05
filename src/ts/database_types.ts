@@ -1,4 +1,4 @@
-export interface Database_Types {
+export interface Database_Objects {
   account_id: number;
   name: string;
   category: string;
