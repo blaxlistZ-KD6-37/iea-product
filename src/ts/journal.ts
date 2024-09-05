@@ -23,70 +23,86 @@ const transaction_detail_ob = await api.GetDB<Transaction_Detail[]>(
   "transaction_detail"
 );
 
-const entry = <HTMLElement>document.querySelector(".journal-entry");
+console.log(transaction_detail_ob);
 
-/* Entry Wrapper */
-const entry_wrapper: HTMLDivElement = document.createElement("div");
-entry_wrapper.classList.add(
-  "entry-wrapper",
-  "bg-yellow-100",
-  "grid",
-  "gap-4",
-  "items-center",
-  "outline",
-  "outline-2",
-  "outline-orange-300"
-);
-const k: number = 2;
+const appendAccount = (k: number): void => {
+  k *= 2;
+  const entry = <HTMLElement>document.querySelector(".journal-entry");
 
-/* Entry Date Creation */
-const entry_date: HTMLTimeElement = document.createElement("time");
-const date = new Date(transaction_ob.transaction_date[0]);
-entry_date.classList.add("day-month");
-entry_date.textContent = `${date.toString().slice(4, 10)}`;
+  /* Entry Wrapper */
+  const entry_wrapper: HTMLDivElement = document.createElement("div");
+  entry_wrapper.classList.add(
+    "entry-wrapper",
+    "bg-yellow-100",
+    "grid",
+    "gap-4",
+    "items-center",
+    "outline",
+    "outline-2",
+    "outline-orange-300"
+  );
+  /* Entry Date Creation */
+  const transaction_ndx: number = transaction_ob.findIndex((val) => {
+    return (
+      val.transaction_tab_id === transaction_detail_ob[k].transaction_tab_id
+    );
+  });
+  const entry_date: HTMLTimeElement = document.createElement("time");
+  const date: Date = new Date(transaction_ob[transaction_ndx].date);
+  entry_date.classList.add("day-month");
+  entry_date.textContent = `${date.toString().slice(4, 10)}`;
 
-/* Entry Debit Creation */
-const entry_debit: HTMLDivElement = document.createElement("div");
-entry_debit.classList.add("account-debit");
-const account_debit: string = account_ob.account_name[id_acc];
-entry_debit.textContent = `${account_debit}`;
+  /* Entry Debit Creation */
+  const account_ndx: number = account_ob.findIndex((val) => {
+    return val.account_id === transaction_detail_ob[k].account_id;
+  });
 
-const entry_debit_value: HTMLDivElement = document.createElement("div");
-entry_debit_value.classList.add("debit");
-const debit_value: number = parseFloat(
-  transaction_detail_ob.transaction_amount[0]
-);
-entry_debit_value.textContent = `₱${debit_value.toFixed(2)}`;
+  const entry_debit: HTMLDivElement = document.createElement("div");
+  entry_debit.classList.add("account-debit");
+  const account_debit: string = account_ob[account_ndx].name;
+  entry_debit.textContent = `${account_debit}`;
 
-/* Entry Credit Creation */
-const entry_credit: HTMLDivElement = document.createElement("div");
-entry_credit.classList.add("account-credit");
-const account_credit: string = account_ob.account_name[0];
-entry_credit.textContent = `${account_credit}`;
+  const entry_debit_value: HTMLDivElement = document.createElement("div");
+  entry_debit_value.classList.add("debit");
+  const debit_value: number = transaction_detail_ob[k].amount;
+  entry_debit_value.textContent = `₱${debit_value.toFixed(2)}`;
 
-const entry_credit_value: HTMLDivElement = document.createElement("div");
-entry_credit_value.classList.add("credit");
-const credit_value: number = parseFloat(
-  transaction_detail_ob.transaction_amount[k]
-);
-entry_credit_value.textContent = `₱${credit_value.toFixed(2)}`;
+  /* Entry Credit Creation */
+  const account_ndx_cred: number = account_ob.findIndex((val) => {
+    return val.account_id === transaction_detail_ob[k + 1].account_id;
+  });
 
-/* Block Div Elements */
-const block_element: HTMLDivElement[] = [
-  document.createElement("div"),
-  document.createElement("div"),
-  document.createElement("div"),
-];
+  const entry_credit: HTMLDivElement = document.createElement("div");
+  entry_credit.classList.add("account-credit");
+  const account_credit: string = account_ob[account_ndx_cred].name;
+  entry_credit.textContent = `${account_credit}`;
 
-/* Append Child Elements to Wrapper */
-entry_wrapper.appendChild(entry_date);
-entry_wrapper.appendChild(entry_debit);
-entry_wrapper.appendChild(entry_debit_value);
-entry_wrapper.appendChild(block_element[0]);
-entry_wrapper.appendChild(block_element[1]);
-entry_wrapper.appendChild(entry_credit);
-entry_wrapper.appendChild(block_element[2]);
-entry_wrapper.appendChild(entry_credit_value);
+  const entry_credit_value: HTMLDivElement = document.createElement("div");
+  entry_credit_value.classList.add("credit");
+  const credit_value: number = transaction_detail_ob[k].amount;
+  entry_credit_value.textContent = `₱${credit_value.toFixed(2)}`;
 
-/* Append Wrapper to Entry */
-entry.appendChild(entry_wrapper);
+  /* Block Div Elements */
+  const block_element: HTMLDivElement[] = [
+    document.createElement("div"),
+    document.createElement("div"),
+    document.createElement("div"),
+  ];
+
+  /* Append Child Elements to Wrapper */
+  entry_wrapper.appendChild(entry_date);
+  entry_wrapper.appendChild(entry_debit);
+  entry_wrapper.appendChild(entry_debit_value);
+  entry_wrapper.appendChild(block_element[0]);
+  entry_wrapper.appendChild(block_element[1]);
+  entry_wrapper.appendChild(entry_credit);
+  entry_wrapper.appendChild(block_element[2]);
+  entry_wrapper.appendChild(entry_credit_value);
+
+  /* Append Wrapper to Entry */
+  entry.appendChild(entry_wrapper);
+};
+
+for (let i = 0; i < Math.ceil(transaction_detail_ob.length / 2); i++) {
+  appendAccount(i);
+}
