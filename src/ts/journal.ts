@@ -1,28 +1,25 @@
 import api from "./api";
 import { Database_Types } from "./database_types";
 
-type Account = Pick<
-  Database_Types,
-  "account_id" | "account_name" | "account_category"
->;
+type Account = Pick<Database_Types, "account_id" | "name" | "category">;
 
 type Transaction_Tab = Pick<
   Database_Types,
-  "transaction_id" | "transaction_date" | "transaction_description"
+  "transaction_tab_id" | "date" | "description"
 >;
 
 type Transaction_Detail = Pick<
   Database_Types,
   | "transaction_detail_id"
-  | "account_id_fk"
-  | "transaction_id_fk"
-  | "transaction_amount"
-  | "transaction_is_debit"
+  | "transaction_tab_id"
+  | "account_id"
+  | "amount"
+  | "is_debit"
 >;
 
-const account_ob = await api.GetDB<Account>("account");
-const transaction_ob = await api.GetDB<Transaction_Tab>("transaction");
-const transaction_detail_ob = await api.GetDB<Transaction_Detail>(
+const account_ob = await api.GetDB<Account[]>("account");
+const transaction_ob = await api.GetDB<Transaction_Tab[]>("transaction");
+const transaction_detail_ob = await api.GetDB<Transaction_Detail[]>(
   "transaction_detail"
 );
 
@@ -40,32 +37,31 @@ entry_wrapper.classList.add(
   "outline-2",
   "outline-orange-300"
 );
-
 const k: number = 2;
 
 /* Entry Date Creation */
 const entry_date: HTMLTimeElement = document.createElement("time");
-const date = new Date(transaction_ob.transaction_date[k]);
+const date = new Date(transaction_ob.transaction_date[0]);
 entry_date.classList.add("day-month");
 entry_date.textContent = `${date.toString().slice(4, 10)}`;
 
 /* Entry Debit Creation */
 const entry_debit: HTMLDivElement = document.createElement("div");
 entry_debit.classList.add("account-debit");
-const account_debit: string = account_ob.account_name[k];
+const account_debit: string = account_ob.account_name[id_acc];
 entry_debit.textContent = `${account_debit}`;
 
 const entry_debit_value: HTMLDivElement = document.createElement("div");
 entry_debit_value.classList.add("debit");
 const debit_value: number = parseFloat(
-  transaction_detail_ob.transaction_amount[k]
+  transaction_detail_ob.transaction_amount[0]
 );
 entry_debit_value.textContent = `₱${debit_value.toFixed(2)}`;
 
 /* Entry Credit Creation */
 const entry_credit: HTMLDivElement = document.createElement("div");
 entry_credit.classList.add("account-credit");
-const account_credit: string = account_ob.account_name[0 + 1];
+const account_credit: string = account_ob.account_name[0];
 entry_credit.textContent = `${account_credit}`;
 
 const entry_credit_value: HTMLDivElement = document.createElement("div");
