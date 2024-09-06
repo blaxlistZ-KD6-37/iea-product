@@ -114,6 +114,12 @@ const createBlockElement = (): HTMLDivElement[] => {
   return block_element;
 };
 
+const verifyDate = (x: number, y: number): boolean => {
+  const date_x: number = new Date(transaction_ob[x].date).getDate();
+  const date_y: number = new Date(transaction_ob[y].date).getDate();
+  return date_x === date_y ? true : false;
+};
+
 const appendAccountElement = (): void => {
   const entry = <HTMLElement>document.querySelector(".journal-entry");
   const entry_wrapper: HTMLElement = createEntryWrapper();
@@ -124,11 +130,9 @@ const appendAccountElement = (): void => {
     const block_element: HTMLDivElement[] = createBlockElement();
 
     /* Append Child Elements to Wrapper */
-    if (transaction_ob[ndx].date === transaction_ob[ndx * 2].date && ndx > 0) {
-      entry_wrapper.appendChild(block_element[0]);
-    } else {
-      entry_wrapper.appendChild(entry_date);
-    }
+    const date_wrapper: HTMLElement = ndx > 0 ? block_element[0] : entry_date;
+
+    entry_wrapper.appendChild(date_wrapper);
     entry_wrapper.appendChild(account_elements.debit_entry);
     entry_wrapper.appendChild(account_elements.debit_value_entry);
     entry_wrapper.appendChild(block_element[1]);
