@@ -23,8 +23,6 @@ const transaction_detail_ob = await api.GetDB<Transaction_Detail[]>(
   "transaction_detail"
 );
 
-console.log(transaction_detail_ob);
-
 type account_sig =
   | "debit_entry"
   | "debit_value_entry"
@@ -34,7 +32,6 @@ type account_sig =
 type account_entries = Record<account_sig, HTMLDivElement>;
 
 const createAccountElement = (ndx: number): account_entries => {
-  /* Entry Debit Creation */
   const account_ndx: number = account_ob.findIndex((val) => {
     return val.account_id === transaction_detail_ob[ndx].account_id;
   });
@@ -49,7 +46,6 @@ const createAccountElement = (ndx: number): account_entries => {
   const debit_value: number = transaction_detail_ob[ndx].amount;
   entry_debit_value.textContent = `₱${debit_value.toFixed(2)}`;
 
-  /* Entry Credit Creation */
   const account_ndx_cred: number = account_ob.findIndex((val) => {
     return val.account_id === transaction_detail_ob[ndx + 1].account_id;
   });
@@ -73,12 +69,12 @@ const createAccountElement = (ndx: number): account_entries => {
 };
 
 const createDateElement = (ndx: number): HTMLTimeElement => {
-  /* Entry Date Creation */
   const transaction_ndx: number = transaction_ob.findIndex((val) => {
     return (
       val.transaction_tab_id === transaction_detail_ob[ndx].transaction_tab_id
     );
   });
+
   const entry_date: HTMLTimeElement = document.createElement("time");
   const date: Date = new Date(transaction_ob[transaction_ndx].date);
   entry_date.classList.add("day-month");
@@ -114,24 +110,35 @@ const createBlockElement = (): HTMLDivElement[] => {
   return block_element;
 };
 
-const verifyDate = (x: number, y: number): boolean => {
-  const date_x: number = new Date(transaction_ob[x].date).getDate();
-  const date_y: number = new Date(transaction_ob[y].date).getDate();
-  return date_x === date_y ? true : false;
-};
-
 const appendAccountElement = (): void => {
   const entry = <HTMLElement>document.querySelector(".journal-entry");
   const entry_wrapper: HTMLElement = createEntryWrapper();
-  for (let ndx = 0; Math.ceil(transaction_detail_ob.length / 2); ndx++) {
-    ndx *= 2;
-    const entry_date: HTMLTimeElement = createDateElement(ndx);
-    const account_elements: account_entries = createAccountElement(ndx);
+  const dates = [];
+  for (let ndx = 0; ndx < Math.ceil(transaction_detail_ob.length) / 2; ndx++) {
+    const temp_ndx: number = ndx * 2;
+
+    const entry_date: HTMLTimeElement = createDateElement(temp_ndx);
+    const account_elements: account_entries = createAccountElement(temp_ndx);
     const block_element: HTMLDivElement[] = createBlockElement();
 
-    /* Append Child Elements to Wrapper */
-    const date_wrapper: HTMLElement = ndx > 0 ? block_element[0] : entry_date;
+    const transaction = <Transaction_Tab>transaction_ob.find(
+      (val: Transaction_Tab) => {
+        return (
+          val.transaction_tab_id ===
+          transaction_detail_ob[temp_ndx].transaction_tab_id
+        );
+      }
+    );
+    dates.push(transaction.date);
 
+    /* Append Child Elements to Wrapper */
+    let date_wrapper: HTMLElement = entry_date;
+    if (
+      dates.length > 1 &&
+      dates[dates.length - 1] === dates[dates.length - 2]
+    ) {
+      date_wrapper = block_element[0];
+    }
     entry_wrapper.appendChild(date_wrapper);
     entry_wrapper.appendChild(account_elements.debit_entry);
     entry_wrapper.appendChild(account_elements.debit_value_entry);
@@ -147,7 +154,3 @@ const appendAccountElement = (): void => {
 };
 
 appendAccountElement();
-
-// for (let i = 0; i < Math.ceil(transaction_detail_ob.length / 2); i++) {
-//   appendAccountElement(i);
-// }

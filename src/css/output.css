@@ -656,6 +656,10 @@ video {
   line-height: 2.25rem;
 }
 
+.font-bold {
+  font-weight: 700;
+}
+
 .outline {
   outline-style: solid;
 }
