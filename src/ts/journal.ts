@@ -1,26 +1,13 @@
 import api from "./api";
 import { Database_Objects } from "./database_types";
 
-type Account = Pick<Database_Objects, "account_id" | "name" | "category">;
-
-type Transaction_Tab = Pick<
+type financial_accounting_t = Pick<
   Database_Objects,
-  "transaction_tab_id" | "date" | "description"
+  "name" | "amount" | "is_debit" | "date" | "description" | "category"
 >;
 
-type Transaction_Detail = Pick<
-  Database_Objects,
-  | "transaction_detail_id"
-  | "transaction_tab_id"
-  | "account_id"
-  | "amount"
-  | "is_debit"
->;
-
-const account_ob = await api.GetDB<Account[]>("account");
-const transaction_ob = await api.GetDB<Transaction_Tab[]>("transaction");
-const transaction_detail_ob = await api.GetDB<Transaction_Detail[]>(
-  "transaction_detail"
+const financial_accounting_ob = await api.GetDB<financial_accounting_t[]>(
+  "financial_account"
 );
 
 type account_sig =
@@ -31,34 +18,36 @@ type account_sig =
 
 type account_entries = Record<account_sig, HTMLDivElement>;
 
-const createAccountElement = (ndx: number): account_entries => {
-  const account_ndx: number = account_ob.findIndex((val) => {
-    return val.account_id === transaction_detail_ob[ndx].account_id;
-  });
+const createDateElement = (curr_date: Date): HTMLTimeElement => {
+  const entry_date: HTMLTimeElement = document.createElement("time");
+  const date: string = new Date(curr_date).toString();
+  entry_date.classList.add("day-month");
+  entry_date.textContent = `${date.slice(8, 10)}-${date.slice(4, 7)}.`;
 
+  return entry_date;
+};
+
+const createAccountElement = (
+  debit_name: string,
+  credit_name: string,
+  debit_value: string,
+  credit_value: string
+): account_entries => {
   const entry_debit: HTMLDivElement = document.createElement("div");
   entry_debit.classList.add("account-debit");
-  const account_debit: string = account_ob[account_ndx].name;
-  entry_debit.textContent = `${account_debit}`;
+  entry_debit.textContent = `${debit_name}`;
 
   const entry_debit_value: HTMLDivElement = document.createElement("div");
   entry_debit_value.classList.add("debit");
-  const debit_value: number = transaction_detail_ob[ndx].amount;
-  entry_debit_value.textContent = `₱${debit_value.toFixed(2)}`;
-
-  const account_ndx_cred: number = account_ob.findIndex((val) => {
-    return val.account_id === transaction_detail_ob[ndx + 1].account_id;
-  });
+  entry_debit_value.textContent = `₱${debit_value}`;
 
   const entry_credit: HTMLDivElement = document.createElement("div");
   entry_credit.classList.add("account-credit");
-  const account_credit: string = account_ob[account_ndx_cred].name;
-  entry_credit.textContent = `${account_credit}`;
+  entry_credit.textContent = `${credit_name}`;
 
   const entry_credit_value: HTMLDivElement = document.createElement("div");
   entry_credit_value.classList.add("credit");
-  const credit_value: number = transaction_detail_ob[ndx].amount;
-  entry_credit_value.textContent = `₱${credit_value.toFixed(2)}`;
+  entry_credit_value.textContent = `₱${credit_value}`;
 
   return {
     debit_entry: entry_debit,
@@ -66,21 +55,6 @@ const createAccountElement = (ndx: number): account_entries => {
     credit_entry: entry_credit,
     credit_value_entry: entry_credit_value,
   };
-};
-
-const createDateElement = (ndx: number): HTMLTimeElement => {
-  const transaction_ndx: number = transaction_ob.findIndex((val) => {
-    return (
-      val.transaction_tab_id === transaction_detail_ob[ndx].transaction_tab_id
-    );
-  });
-
-  const entry_date: HTMLTimeElement = document.createElement("time");
-  const date: Date = new Date(transaction_ob[transaction_ndx].date);
-  entry_date.classList.add("day-month");
-  entry_date.textContent = `${date.toString().slice(4, 10)}`;
-
-  return entry_date;
 };
 
 const createEntryWrapper = (): HTMLElement => {
@@ -110,33 +84,31 @@ const createBlockElement = (): HTMLDivElement[] => {
   return block_element;
 };
 
-const appendAccountElement = (): void => {
+const createEntry = (curr_date: string): void => {
   const entry = <HTMLElement>document.querySelector(".journal-entry");
   const entry_wrapper: HTMLElement = createEntryWrapper();
-  const dates = [];
-  for (let ndx = 0; ndx < Math.ceil(transaction_detail_ob.length) / 2; ndx++) {
-    const temp_ndx: number = ndx * 2;
-
-    const entry_date: HTMLTimeElement = createDateElement(temp_ndx);
-    const account_elements: account_entries = createAccountElement(temp_ndx);
+  const finance: financial_accounting_t[] = financial_accounting_ob.filter(
+    (account) => {
+      return (
+        new Date(account.date).toString() === new Date(curr_date).toString()
+      );
+    }
+  );
+  for (let ndx = 0; ndx < Math.ceil(finance.length) / 2; ndx++) {
+    const temp_ndx = 2 * ndx;
+    const entry_date: HTMLTimeElement = createDateElement(
+      finance[temp_ndx].date
+    );
+    const account_elements: account_entries = createAccountElement(
+      finance[temp_ndx].name,
+      finance[temp_ndx + 1].name,
+      finance[temp_ndx].amount.toFixed(2),
+      finance[temp_ndx + 1].amount.toFixed(2)
+    );
     const block_element: HTMLDivElement[] = createBlockElement();
 
-    const transaction = <Transaction_Tab>transaction_ob.find(
-      (val: Transaction_Tab) => {
-        return (
-          val.transaction_tab_id ===
-          transaction_detail_ob[temp_ndx].transaction_tab_id
-        );
-      }
-    );
-    dates.push(transaction.date);
-
-    /* Append Child Elements to Wrapper */
     let date_wrapper: HTMLElement = entry_date;
-    if (
-      dates.length > 1 &&
-      dates[dates.length - 1] === dates[dates.length - 2]
-    ) {
+    if (temp_ndx > 0 && finance[temp_ndx].date === finance[temp_ndx + 1].date) {
       date_wrapper = block_element[0];
     }
     entry_wrapper.appendChild(date_wrapper);
@@ -148,9 +120,23 @@ const appendAccountElement = (): void => {
     entry_wrapper.appendChild(block_element[3]);
     entry_wrapper.appendChild(account_elements.credit_value_entry);
 
-    /* Append Wrapper to Entry */
     entry.appendChild(entry_wrapper);
   }
 };
 
-appendAccountElement();
+const appendEntries = (): void => {
+  let dates: string[] = [];
+
+  financial_accounting_ob.forEach((value) => {
+    dates.push(new Date(value.date).toISOString().split("T")[0]);
+  });
+
+  const date_set = new Set(dates);
+  dates = Array.from(date_set);
+
+  for (let i = 0; i < dates.length; i++) {
+    createEntry(dates[i].toString());
+  }
+};
+
+appendEntries();

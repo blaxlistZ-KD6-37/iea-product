@@ -70,6 +70,7 @@ func main() {
 	A1_rtr.Get("/runlive/account", database_handler.handlerAccount)
 	A1_rtr.Get("/runlive/transaction", database_handler.handlerTransaction)
 	A1_rtr.Get("/runlive/transaction_detail", database_handler.handlerTransactionDetail)
+	A1_rtr.Get("/runlive/financial_account", database_handler.handlerFinancialAccounts)
 
 	// Mounting the A1_rtr router under the "/A1_" path prefix
 	router.Mount("/A1_", A1_rtr)
