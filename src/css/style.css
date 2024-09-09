@@ -222,7 +222,7 @@ main {
 .account-cred,
 .account-deb {
   background: var(--color-font-secondary);
-  min-height: 22rem;
+  min-height: 21rem;
   font-size: 1.25rem;
   display: flex;
   flex-wrap: wrap;
@@ -284,6 +284,7 @@ main {
 .ok-btn:hover {
   text-transform: uppercase;
   font-weight: 900;
+  cursor: pointer;
 }
 
 .desc:focus,
@@ -291,4 +292,22 @@ main {
   outline-width: 0.1rem;
   outline-style: solid;
   outline-color: var(--color-font-main);
+}
+
+.account-cred,
+.account-deb {
+  outline-style: none;
+}
+
+::-webkit-scrollbar {
+  width: 0.25em;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-main);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-font-main);
+  border-radius: 10rem;
 }
