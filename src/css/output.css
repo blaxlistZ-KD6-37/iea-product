@@ -706,3 +706,19 @@ video {
 .hover\:max-w-72:hover {
   max-width: 18rem;
 }
+
+.focus\:outline-1:focus {
+  outline-width: 1px;
+}
+
+.focus\:outline-blue-500:focus {
+  outline-color: #3b82f6;
+}
+
+.focus\:outline-red-950:focus {
+  outline-color: #450a0a;
+}
+
+.focus\:outline-red-600:focus {
+  outline-color: #dc2626;
+}

@@ -285,3 +285,10 @@ main {
   text-transform: uppercase;
   font-weight: 900;
 }
+
+.desc:focus,
+.amt:focus {
+  outline-width: 0.1rem;
+  outline-style: solid;
+  outline-color: var(--color-font-main);
+}
