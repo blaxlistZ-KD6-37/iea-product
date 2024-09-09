@@ -87,3 +87,9 @@ export const FormSubmit = <T extends Record<string, any[]>>(
 
   PostDB(path, data, <T[keyof T]>[payload]);
 };
+
+export default {
+  GetDB,
+  PostDB,
+  FormSubmit,
+};
