@@ -236,7 +236,7 @@ main {
 
 .amount-input {
   display: grid;
-  grid-template-columns: 0fr 1fr;
+  grid-template-columns: 2fr 8fr;
   gap: 0.5em;
   background: var(--color-font-secondary);
   align-items: center;
