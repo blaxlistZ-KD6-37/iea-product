@@ -1,4 +1,4 @@
-import api from "./api";
+import api from "./api.js";
 import { Database_Objects } from "./database_types";
 
 type account_t = Pick<Database_Objects, "name" | "category">;

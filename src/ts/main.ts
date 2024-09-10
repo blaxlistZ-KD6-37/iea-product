@@ -6,13 +6,13 @@ const frameworks = <NodeListOf<HTMLElement>>(
 const framework_vec: HTMLElement[] = Array.from(frameworks);
 
 const non_pivot_vec = framework_vec.filter(
-  (frame: HTMLElement, ndx: number): boolean => {
+  (_, ndx: number): boolean => {
     return ndx !== 2;
   }
 );
 
 const pivot_vec = <HTMLElement>framework_vec.find(
-  (frame: HTMLElement, ndx: number): boolean => {
+  (_, ndx: number): boolean => {
     return ndx === 2;
   }
 );
