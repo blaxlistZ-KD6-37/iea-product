@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="dummy" />
+    <meta name="author" content="blaxlistZ" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="refresh" content="4680" />
+    <title>Add Accounts</title>
+    <!-- Cascading Style Sheet -->
+    <link rel="stylesheet" href="./src/css/output.css" />
+    <link rel="stylesheet" href="./src/css/style.css" />
+    <!-- CSS.GG -->
+    <!-- <link href="https://css.gg/css" rel="stylesheet" /> -->
+    <!-- Font Awesome -->
+    <script
+      src="https://kit.fontawesome.com/4f7e7a7341.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Boxicons -->
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+  </head>
+  <body>
+    <!-- START OF HEADER BAR -->
+    <header id="header-bar">
+      <section class="bar-b"></section>
+      <section class="bar-a"></section>
+      <section class="bar-a account-bar text-center">
+        <span>Add Accounts</span>
+      </section>
+      <section class="bar-b"></section>
+    </header>
+
+    <main id="main-frame">
+      <div class="account-container text-center">
+        <!-- ACCOUNT HEADING -->
+        <section class="account-type_heading text-center">
+          <span>Account Chart</span>
+        </section>
+        <!-- END ACCOUNTING HEADING -->
+
+        <!-- ACCOUNT POST -->
+        <form action="/form" method="post" class="account-post">
+          <section class="type-wrapper">
+            <div class="debit-part">
+              <div class="acc-type_n">Debit</div>
+              <div class="account-box">
+                <select
+                  name="account-deb"
+                  size="4"
+                  class="account-deb"
+                  required
+                ></select>
+              </div>
+            </div>
+            <div class="credit-part">
+              <div class="acc-type_n">Credit</div>
+              <div class="account-box">
+                <select
+                  name="account-cred"
+                  size="4"
+                  class="account-cred"
+                ></select>
+              </div>
+            </div>
+          </section>
+          <section class="amount">
+            <div class="acc-type_n">Amount</div>
+            <div class="amount-input">
+              <div class="currency text-right">&#8369;</div>
+              <input
+                type="text"
+                class="amt"
+                name="amt"
+                placeholder="1,234.56"
+                required
+              />
+            </div>
+          </section>
+          <section class="description">
+            <div class="acc-type_n">Description</div>
+            <p>
+              <input
+                type="text"
+                class="desc"
+                name="desc"
+                required
+                placeholder="Bought supplies on hand."
+              />
+            </p>
+          </section>
+          <section class="accept">
+            <input type="submit" value="Ok" class="ok-btn" />
+          </section>
+        </form>
+      </div>
+      <!-- END ACCOUNT POST -->
+    </main>
+    <!-- TypeScript -->
+    <script type="module" src="./src/ts/accounts.ts"></script>
+  </body>
+</html>
