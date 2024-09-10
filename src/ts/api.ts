@@ -23,7 +23,7 @@ const requestOptions = (
 export const GetDB = async <T>(path: string): Promise<T> => {
   try {
     const response = await fetch(
-      `http://localhost:8080/A1_/runlive/${path}`,
+      `http://localhost:6543/A1_/runlive/${path}`,
       requestOptions("GET", new_header)
     );
 
@@ -52,7 +52,7 @@ export const PostDB = async <T extends Record<string, any[]>>(
     } as Partial<T>;
 
     const response = await fetch(
-      `http://localhost:8080/A1_/runlive/${path}`,
+      `http://localhost:6543/A1_/runlive/${path}`,
       requestOptions("POST", new_header, updated_data)
     );
 

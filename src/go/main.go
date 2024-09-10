@@ -89,38 +89,3 @@ func main() {
 		log.Fatal(err)
 	}
 }
-
-// // Connection string
-// connection_str := "host=localhost port=5432 user=postgres password=u;09]KSa6#HnMb3# dbname=ieacoldbrew sslmode=disable"
-
-// // Open the connection
-// database_iea, err := sql.Open("postgres", connection_str)
-// if err != nil {
-// 	log.Fatal(err)
-// }
-// defer database_iea.Close()
-
-// mux := http.NewServeMux()
-
-// mux.HandleFunc("/runlive/product/price", func(w http.ResponseWriter, r *http.Request) {
-// 	price := SelectionDatabase(database_iea, "name", "product")
-
-// 	w.Header().Set("Content-Type", "application/json")
-// 	json.NewEncoder(w).Encode(map[string]interface{}{
-// 		"price": price,
-// 	})
-// })
-
-// c := cors.New(cors.Options{
-// 	AllowedOrigins:   []string{"https://*", "http://*"},
-// 	AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-// 	AllowedHeaders:   []string{"*"},
-// 	ExposedHeaders:   []string{"Link"},
-// 	AllowCredentials: false,
-// 	MaxAge:           300,
-// })
-
-// handler := c.Handler(mux)
-
-// fmt.Println("Server is running on :8080")
-// log.Fatal(http.ListenAndServe(":8080", handler))
