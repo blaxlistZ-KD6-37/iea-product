@@ -1,9 +1,9 @@
-import api from "./api.js";
+import api from "./api";
 import { Database_Objects } from "./database_types";
 
 type account_t = Pick<Database_Objects, "name" | "category">;
 
-const account_ob = await api.GetSupabase<account_t[]>("account");
+const account_ob = await api.GetDB<account_t[]>("account");
 
 const filterAccount = (account_type: string): account_t[] => {
   return account_ob.filter((account) => {
