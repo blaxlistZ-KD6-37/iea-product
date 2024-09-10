@@ -1,3 +1,4 @@
+import "../css/style.css";
 import api from "./api";
 import { Database_Objects } from "./database_types";
 

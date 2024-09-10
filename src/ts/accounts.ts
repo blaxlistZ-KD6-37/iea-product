@@ -1,9 +1,14 @@
+import "../css/style.css";
 import api from "./api";
 import { Database_Objects } from "./database_types";
 
+const { BASE_URL } = import.meta.env;
+
+console.log(BASE_URL);
+
 type account_t = Pick<Database_Objects, "name" | "category">;
 
-const account_ob = await api.GetDB<account_t[]>("account");
+const account_ob = await api.GetSupabase<account_t[]>("account");
 
 const filterAccount = (account_type: string): account_t[] => {
   return account_ob.filter((account) => {
