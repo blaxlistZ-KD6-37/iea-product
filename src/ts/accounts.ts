@@ -1,6 +1,9 @@
 import api from "./api";
 import { Database_Objects } from "./database_types";
 
+const doc_type = <HTMLElement>document.querySelector(".account-type_heading");
+doc_type.innerHTML = `hello`
+
 type account_t = Pick<Database_Objects, "name" | "category">;
 
 const account_ob = await api.GetDB<account_t[]>("account");
