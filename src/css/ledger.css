@@ -163,6 +163,12 @@
         text-transform: capitalize;
         background: var(--color-font-secondary);
         padding: 0.25rem;
+        transition: ease-in-out 500ms 60ms;
+      }
+      .btn:hover {
+        background-color: var(--color-font-main);
+        color: var(--color-font-secondary);
+        transition: ease-in-out 500ms 60ms;
       }
     }
   }
