@@ -586,11 +586,6 @@ video {
   grid-row-end: 2;
 }
 
-.my-4 {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-}
-
 .mb-10 {
   margin-bottom: 2.5rem;
 }
@@ -599,20 +594,16 @@ video {
   display: flex;
 }
 
-.table {
-  display: table;
-}
-
 .grid {
   display: grid;
 }
 
-.min-h-dvh {
-  min-height: 100dvh;
-}
-
 .min-h-12 {
   min-height: 3rem;
+}
+
+.min-h-dvh {
+  min-height: 100dvh;
 }
 
 .grid-cols-3 {

@@ -1,0 +1,207 @@
+/*===============
+ * VARIABLES
+ *============== */
+:root {
+  /* Backgrounds */
+  --color-bg-main: #eba83a;
+
+  /* Texts */
+  --color-font-main: #9c1602;
+  --color-font-secondary: #fff8d9;
+}
+
+/*===============
+ * HEADER
+ *============== */
+#top-style {
+  min-height: 20dvh;
+  .bar-top,
+  .title {
+    min-height: 8dvh;
+  }
+  .bar-top,
+  .bar-bottom {
+    display: grid;
+    gap: 1em;
+  }
+  .bar-top {
+    grid-template-columns: 1fr 3fr;
+    .bar-style-left {
+      background: var(--color-font-secondary);
+    }
+
+    .bar-style-right {
+      background: var(--color-font-main);
+    }
+  }
+
+  .title {
+    display: flex;
+    text-transform: uppercase;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    font-weight: 900;
+    text-shadow: 0.1rem 0.1rem 0.1rem var(--color-font-secondary);
+  }
+
+  .bar-bottom {
+    grid-template-columns: 3fr 1fr;
+    min-height: 4dvh;
+    .bar-style-left {
+      background: var(--color-font-main);
+    }
+
+    .bar-style-right {
+      background: var(--color-font-secondary);
+    }
+  }
+}
+
+/*===============
+ * LEDGER
+ *============== */
+#ledger {
+  border: 0.2rem solid var(--color-font-main);
+  min-height: 56dvh;
+  display: grid;
+  grid-template-areas:
+    "asset equity"
+    "liability equity";
+
+  .asset-tile,
+  .liability-tile,
+  .equity-tile {
+    color: var(--color-font-main);
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    text-align: center;
+    padding: 0.1rem;
+    .name {
+      min-height: 4dvh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 700;
+      text-transform: uppercase;
+      background: var(--color-font-secondary);
+    }
+  }
+
+  .asset-tile {
+    grid-area: asset;
+    min-height: 28dvh;
+  }
+  .liability-tile {
+    grid-area: liability;
+    min-height: 28dvh;
+  }
+
+  .equity-tile {
+    grid-area: equity;
+    min-height: 56dvh;
+    border-left: 0.1rem solid var(--color-font-main);
+    border-left-width: 0.2rem;
+    .equity-wrapper {
+      min-height: 50dvh;
+      display: grid;
+      grid-template-rows: 2fr 3fr;
+      .capital-tile {
+        border-bottom: 0.2rem solid var(--color-font-main);
+      }
+      .income-tile {
+        min-height: 31dvh;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        .revenue-tile {
+          border-right: 0.2rem solid var(--color-font-main);
+        }
+      }
+    }
+  }
+}
+
+/*===============
+ * FOOTER
+ *============== */
+
+#accounts {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  min-height: 23dvh;
+  .bar-footer {
+    min-height: 14dvh;
+    display: grid;
+    grid-template-columns: 1fr 8fr 1fr;
+    gap: 1em;
+    .bar-footer-left {
+      background: var(--color-font-main);
+    }
+    .bar-footer-right {
+      background: var(--color-font-secondary);
+    }
+  }
+  .accounts-wrapper {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    min-height: 5dvh;
+    text-align: center;
+    .acc {
+      display: flex;
+      justify-content: center;
+      padding: 0.5rem;
+      .btn {
+        border-radius: 0.25rem;
+        max-width: 10ch;
+        min-height: 7dvh;
+        font-weight: 700;
+        text-wrap: wrap;
+        text-transform: capitalize;
+        background: var(--color-font-secondary);
+        padding: 0.25rem;
+      }
+    }
+  }
+}
+
+@media (min-width: 50em) {
+  #ledger {
+    min-height: 65dvh;
+    .asset-tile,
+    .liability-tile,
+    .equity-tile {
+      .name {
+        min-height: 5dvh;
+      }
+    }
+    .asset-tile {
+      min-height: 33dvh;
+    }
+    .liability-tile {
+      min-height: 33dvh;
+    }
+
+    .equity-tile {
+      min-height: 66dvh;
+      .equity-wrapper {
+        min-height: 58dvh;
+        .income-tile {
+          min-height: 36dvh;
+        }
+      }
+    }
+  }
+  #accounts {
+    min-height: 13dvh;
+    .bar-footer {
+      min-height: 4dvh;
+    }
+    .accounts-wrapper {
+      min-height: 9dvh;
+    }
+  }
+}

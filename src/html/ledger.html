@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="dummy" />
+    <meta name="author" content="blaxlistZ" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="refresh" content="4680" />
+    <title>Ledger</title>
+    <!-- Cascading Style Sheet -->
+    <link rel="stylesheet" href="../css/output.css" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/ledger.css" />
+    <!-- CSS.GG -->
+    <!-- <link href="https://css.gg/css" rel="stylesheet" /> -->
+    <!-- Font Awesome -->
+    <script
+      src="https://kit.fontawesome.com/4f7e7a7341.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Boxicons -->
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+  </head>
+  <body>
+    <!-- HEADER BAR -->
+    <header id="top-style">
+      <!-- BAR TOP -->
+      <section class="bar-top">
+        <div class="bar-style-left"></div>
+        <div class="bar-style-right"></div>
+      </section>
+      <!-- END BAR TOP -->
+
+      <!-- TITLE -->
+      <section class="title"><div>ledger</div></section>
+      <!-- END TITLE -->
+
+      <!-- BAR BOTTOM -->
+      <section class="bar-bottom">
+        <div class="bar-style-left"></div>
+        <div class="bar-style-right"></div>
+      </section>
+      <!-- END BAR BOTTOM -->
+    </header>
+    <!-- END HEADER BAR -->
+
+    <!-- LEDGER -->
+    <main id="ledger">
+      <!-- ASSET -->
+      <section class="asset-tile">
+        <div class="name"><div>assets</div></div>
+        <div class="asset-wrapper"></div>
+      </section>
+      <!-- END ASSET -->
+
+      <!-- LIABILITY -->
+      <section class="liability-tile">
+        <div class="name"><div>liabilities</div></div>
+        <div class="liability-wrapper"></div>
+      </section>
+      <!-- END LIABILITY -->
+
+      <!-- START EQUITY -->
+      <section class="equity-tile">
+        <div class="name"><div>equities</div></div>
+        <div class="equity-wrapper">
+          <div class="capital-tile"></div>
+          <div class="income-tile">
+            <div class="revenue-tile"></div>
+            <div class="expense-tile"></div>
+          </div>
+        </div>
+      </section>
+      <!-- END EQUITY -->
+    </main>
+    <!-- END LEDGER -->
+
+    <!-- ACCOUNTING -->
+    <footer id="accounts">
+      <section class="bar-footer">
+        <div class="bar-footer-left"></div>
+        <div class="bar-footer-center"></div>
+        <div class="bar-footer-right"></div>
+      </section>
+      <section class="accounts-wrapper">
+        <div class="journal acc"><button class="btn">journal</button></div>
+        <div class="t-balance acc">
+          <button class="btn">t balance</button>
+        </div>
+        <div class="financial-statement acc">
+          <button class="btn">financial statement</button>
+        </div>
+      </section>
+    </footer>
+    <!-- END ACCOUNTING -->
+    <!-- TypeScript -->
+    <script type="module" src="../ts/ledger.ts"></script>
+  </body>
+</html>
