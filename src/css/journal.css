@@ -1,0 +1,90 @@
+/*===============
+ * GLOBAL STYLES
+ *=============== */
+
+header {
+  min-height: 4rem;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 1em;
+}
+
+/*===============
+ * Bar Header
+ *============== */
+#header-bar {
+  min-height: 15dvh;
+}
+
+#journal-title {
+  min-height: 10rem;
+  max-width: 10ch;
+  font-size: 5ch;
+  margin-inline: auto;
+}
+
+#wrapper-close {
+  min-height: 1.5rem;
+  display: grid;
+  grid-template-columns: 3fr 1fr 1fr 2fr;
+  gap: 1em;
+}
+
+.bar-a {
+  background: var(--color-font-secondary);
+}
+
+.bar-b {
+  background-color: var(--color-font-main);
+}
+
+.closing-bar:nth-child(odd) {
+  background: var(--color-font-main);
+}
+
+.closing-bar:nth-child(even) {
+  background: var(--color-font-secondary);
+}
+
+/*===============
+ * Journal Table
+ *============== */
+
+#journal-head,
+.entry-wrapper {
+  grid-template-columns: 3fr 4fr 2fr 1fr;
+  border-radius: 0.25rem;
+}
+
+#journal-head {
+  font-size: 2.25ch;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.journal-wrapper {
+  flex-direction: column;
+  justify-content: center;
+  margin-inline: auto;
+  max-width: 100ch;
+  gap: 0.5em;
+}
+
+.journal-year {
+  max-width: 5ch;
+  font-weight: 500;
+  border-radius: 0.25rem;
+}
+
+.journal-entry {
+  gap: 1em;
+  font-weight: 500;
+}
+
+.entry-wrapper {
+  padding: 0.5rem;
+}
+
+.account-credit {
+  margin-left: 1.5rem;
+}
