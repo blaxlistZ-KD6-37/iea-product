@@ -12,8 +12,9 @@
     1. Balance Sheet
     1. Cash Flow Statement
 1. PostScript
-    1. Journal Transactions
+    1. Journal Transactions **[x]**
     1. Ledger
+    1. Trial Balance
     1. Others
         1. Charts/Graphs
         1. Design Specifications
