@@ -1,4 +1,4 @@
-// import "../css/style.css";
+import "../css/style.css";
 
 const frameworks = <NodeListOf<HTMLElement>>(
   document.querySelectorAll(".frameworks")
