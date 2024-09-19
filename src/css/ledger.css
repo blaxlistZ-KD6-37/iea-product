@@ -69,6 +69,7 @@
   grid-template-areas:
     "asset equity"
     "liability equity";
+  align-items: baseline;
 
   .asset-tile,
   .liability-tile,
@@ -78,7 +79,7 @@
     flex-wrap: wrap;
     flex-direction: column;
     text-align: center;
-    padding: 0.1rem;
+    height: 100%;
     .name {
       min-height: 4dvh;
       display: flex;
@@ -92,7 +93,6 @@
 
   .asset-tile {
     grid-area: asset;
-    min-height: 28dvh;
   }
   .liability-tile {
     grid-area: liability;
@@ -108,18 +108,132 @@
       min-height: 50dvh;
       display: grid;
       grid-template-rows: 2fr 3fr;
+      width: 100%;
       .capital-tile {
-        border-bottom: 0.2rem solid var(--color-font-main);
+        width: 100%;
+        height: 100%;
+        /* border-bottom: 0.2rem solid var(--color-font-main); */
       }
       .income-tile {
+        height: 100%;
         min-height: 31dvh;
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        .revenue-tile {
+        /* .revenue-tile {
           border-right: 0.2rem solid var(--color-font-main);
-        }
+        } */
       }
     }
+  }
+}
+
+/*===============
+ * ACCOUNT
+ *============== */
+
+.asset-wrapper,
+.liability-wrapper,
+.capital-tile {
+  .acc-container_wrapper {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 133%;
+    padding: 0.5em;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+  }
+}
+
+.revenue-tile,
+.expense-tile {
+  max-width: 23dvw;
+  max-height: 50dvh;
+  .acc-container_wrapper {
+    /* height: 100%; */
+    gap: 0.5em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0.5em;
+    overflow-y: auto;
+    overscroll-behavior-inline: contain;
+  }
+}
+
+.acc-container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: flex-end;
+  font-size: 0.9rem;
+  font-weight: 700;
+  max-width: 40ch;
+
+  border-top: 0.1rem solid var(--color-font-main);
+  border-left: 0.1rem solid var(--color-font-main);
+  border-right: 0.1rem solid var(--color-font-main);
+  border-bottom: 0.1rem solid var(--color-font-main);
+  background: var(--color-font-secondary);
+
+  .acc-name {
+    border-bottom: 0.1rem solid var(--color-font-main);
+  }
+  .side-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    border-bottom: 0.1rem solid var(--color-font-main);
+    .side-debit,
+    .side-credit {
+      display: grid;
+      .data {
+        flex: 1;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        justify-content: center;
+        .d-acc_wrapper {
+          flex: 1;
+          border-bottom: 0.1rem solid var(--color-font-main);
+          padding: 0.2em;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 1em;
+        }
+      }
+      .sum {
+        align-self: self-end;
+        /* border: 0.1rem solid var(--color-font-main); */
+      }
+    }
+  }
+  .side-debit {
+    border-right: 0.1rem solid var(--color-font-main);
+  }
+  .balance {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    .balance-space {
+      min-height: 0.4rem;
+      border: 0.15rem solid var(--color-font-main);
+    }
+  }
+}
+
+.scroller {
+  ::-webkit-scrollbar {
+    width: 0.25em;
+    height: 0.25em;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-font-secondary);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-font-main);
+    border-radius: 1rem;
   }
 }
 
@@ -174,7 +288,22 @@
   }
 }
 
-@media (min-width: 50em) {
+@media (min-width: 40em) {
+  .acc-container_wrapper {
+    grid-auto-columns: 76%;
+  }
+  .asset-wrapper,
+  .capital-tile {
+    max-width: 48dvw;
+  }
+  /* .acc-container {
+    font-size: 1rem;
+    min-width: 40ch;
+    max-height: 30dvh;
+  } */
+}
+
+@media (min-width: 100em) {
   #ledger {
     min-height: 65dvh;
     .asset-tile,
@@ -209,5 +338,28 @@
     .accounts-wrapper {
       min-height: 9dvh;
     }
+  }
+  .asset-wrapper,
+  .liability-wrapper,
+  .capital-tile {
+    max-width: 49.3dvw;
+    height: 80%;
+    .acc-container_wrapper {
+      overflow-y: hidden;
+      grid-auto-columns: 36%;
+    }
+  }
+
+  .revenue-tile,
+  .expense-tile {
+    max-width: 25dvw;
+    /* background: blue; */
+    /* max-height: 50dvh; */
+    /* .acc-container_wrapper {
+    } */
+  }
+
+  .acc-container {
+    font-size: 1rem;
   }
 }

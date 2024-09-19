@@ -35,13 +35,32 @@ body {
   font-family: var(--typography-body);
   font-size: 1.25rem;
   /* margin-inline: auto; */
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
   /* width: min(90%, 90dvw); */
 }
 
 main {
   align-items: center;
   margin-inline: auto;
+}
+
+::-webkit-scrollbar {
+  width: 0.5em;
+  height: 0.5em;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-font-main);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-font-secondary);
+  border-radius: 1rem;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #fce786;
+  border-radius: 1rem;
 }
 
 /*===============
