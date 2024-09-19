@@ -110,18 +110,20 @@
       grid-template-rows: 2fr 3fr;
       width: 100%;
       .capital-tile {
-        width: 100%;
+        min-width: 100%;
         height: 100%;
-        /* border-bottom: 0.2rem solid var(--color-font-main); */
+        border-bottom: 0.2rem solid var(--color-font-main);
       }
       .income-tile {
         height: 100%;
         min-height: 31dvh;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        /* .revenue-tile {
-          border-right: 0.2rem solid var(--color-font-main);
-        } */
+        display: flex;
+        flex-wrap: wrap;
+        .revenue-tile,
+        .expense-tile {
+          min-width: 100%;
+          /* border-right: 0.2rem solid var(--color-font-main); */
+        }
       }
     }
   }
