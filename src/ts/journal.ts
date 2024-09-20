@@ -85,6 +85,22 @@ const createBlockElement = (): HTMLDivElement[] => {
   return block_element;
 };
 
+const sortByDebit = (accounts: financial_accounting_t[]): void => {
+  let tmp_ndx: number = 0;
+  for (let ndx = 0; ndx < Math.ceil(accounts.length / 2); ndx++) {
+    tmp_ndx = ndx * 2;
+    if (
+      (accounts[tmp_ndx].is_debit ? 0 : 1) -
+        (accounts[tmp_ndx + 1].is_debit ? 0 : 1) >
+      0
+    ) {
+      let temp: financial_accounting_t = accounts[tmp_ndx];
+      accounts[tmp_ndx] = accounts[tmp_ndx + 1];
+      accounts[tmp_ndx + 1] = temp;
+    }
+  }
+};
+
 const createEntry = (curr_date: string): void => {
   const entry = <HTMLElement>document.querySelector(".journal-entry");
   const entry_wrapper: HTMLElement = createEntryWrapper();
@@ -95,8 +111,8 @@ const createEntry = (curr_date: string): void => {
       );
     }
   );
-  console.log(financial_accounting_ob);
   finance.reverse();
+  sortByDebit(finance);
 
   for (let ndx = 0; ndx < Math.ceil(finance.length) / 2; ndx++) {
     const temp_ndx = 2 * ndx;
@@ -136,7 +152,7 @@ const appendEntries = (): void => {
   });
 
   const date_set = new Set(dates);
-  dates = Array.from(date_set);
+  dates = Array.from(date_set).sort();
 
   for (let i = 0; i < dates.length; i++) {
     createEntry(dates[i].toString());
