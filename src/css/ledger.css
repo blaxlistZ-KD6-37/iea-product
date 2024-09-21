@@ -179,6 +179,17 @@
 
   .acc-name {
     border-bottom: 0.1rem solid var(--color-font-main);
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    align-items: center;
+    .name-title {
+      border-left: 0.1rem solid var(--color-font-main);
+      border-right: 0.1rem solid var(--color-font-main);
+    }
+    .name-debit,
+    .name-credit {
+      font-size: 0.8rem;
+    }
   }
   .side-wrapper {
     display: grid;
@@ -348,7 +359,7 @@
     height: 80%;
     .acc-container_wrapper {
       overflow-y: hidden;
-      grid-auto-columns: 36%;
+      grid-auto-columns: 46%;
     }
   }
 
