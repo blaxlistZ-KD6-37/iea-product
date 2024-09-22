@@ -13,7 +13,7 @@
     1. Cash Flow Statement
 1. PostScript
     1. Journal Transactions **[x]**
-    1. Ledger
+    1. Ledger **[x]**
     1. Trial Balance
     1. Others
         1. Charts/Graphs
