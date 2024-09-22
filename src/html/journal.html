@@ -31,8 +31,11 @@
     <!-- END OF HEADER BAR -->
 
     <!-- START OF TITLE -->
-    <article id="journal-title" class="text-center p-2 font-bold">
-      General Journal
+    <article
+      id="journal-title"
+      class="text-center p-2 font-bold uppercase flex items-center justify-center"
+    >
+      Journal
     </article>
     <!-- END OF TITLE -->
 
@@ -74,6 +77,22 @@
       </div>
       <!-- END OF PSEUDO JOURNAL TABLE -->
     </main>
+
+    <!-- ACCOUNTING -->
+    <footer id="accounts">
+      <section class="accounts-wrapper">
+        <div class="journal acc">
+          <a href="./journal.html"><button class="btn">journal</button></a>
+        </div>
+        <div class="t-balance acc">
+          <a href="./ledger.html"><button class="btn">ledger</button></a>
+        </div>
+        <div class="financial-statement acc">
+          <a href="./t_balance.html"><button class="btn">trial balance</button></a>
+        </div>
+      </section>
+    </footer>
+    <!-- END ACCOUNTING -->
     <!-- TypeScript -->
     <script type="module" src="../ts/journal.ts"></script>
   </body>

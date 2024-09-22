@@ -1,21 +1,25 @@
 /* ===============
  * FONTS
  *============== */
+@import url("https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Josefin+Slab&family=Merriweather&family=Satisfy&display=swap");
 
 /*===============
  * VARIABLES
  *============== */
 :root {
   /* Backgrounds */
-  --color-bg-main: #eba83a;
+  --color-bg-main: #eecc7e;
 
   /* Texts */
-  --color-font-main: #9c1602;
+  --color-font-main: #6f4e37;
   --color-font-secondary: #fff8d9;
-  --typography-headings: "AmaticSC_Bold";
-  --typography-body: "Merriweather_Regular";
-  --typography-captions: "Josefin_SlabRegular";
-  --typography-notes: "Satisfy_Regular";
+  --typography-headings: "Amatic SC", cursive;
+  --typography-body: "Merriweather", serif;
+  --typography-captions: "Josefin Slab", serif;
+  --typography-notes: "Satisfy", cursive;
+
+  /* Sizes */
+  --spacing-unit: 8px;
 }
 
 /*===============
@@ -33,10 +37,9 @@ body {
   background: var(--color-bg-main);
   color: var(--color-font-main);
   font-family: var(--typography-body);
-  font-size: 1.25rem;
-  /* margin-inline: auto; */
-  /* overflow-x: hidden; */
-  /* width: min(90%, 90dvw); */
+  font-size: 1rem;
+  line-height: 1.6;
+  min-height: 100vh;
 }
 
 main {
@@ -44,36 +47,82 @@ main {
   margin-inline: auto;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--typography-headings);
+  margin-bottom: calc(var(--spacing-unit) * 2);
+}
+
+/* Scrollbar Styles */
 ::-webkit-scrollbar {
   width: 0.5em;
   height: 0.5em;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-font-main);
+  background: var(--color-font-secondary);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-font-secondary);
+  background: var(--color-font-main);
   border-radius: 1rem;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #fce786;
-  border-radius: 1rem;
+  background: #8a6246;
 }
 
 /*===============
  * Frameworks
  *============== */
+
 .frameworks {
-  max-width: 15ch;
-  min-height: 15ch;
-  margin-inline: auto;
+  width: 200px;
+  height: 200px;
+  margin: auto;
+  background: var(--color-font-secondary);
   color: var(--color-font-main);
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: bold;
   text-transform: uppercase;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.frameworks:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.subject {
+  font-family: var(--typography-captions);
+  font-size: 1.2rem;
+  text-align: center;
+  padding: calc(var(--spacing-unit) * 2);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  #main-frame {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(5, 1fr);
+    gap: calc(var(--spacing-unit) * 2);
+  }
+
+  .frameworks {
+    width: 150px;
+    height: 150px;
+  }
+
+  .subject {
+    font-size: 1rem;
+  }
 }
