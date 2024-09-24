@@ -7,7 +7,7 @@
     <meta name="author" content="blaxlistZ" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="refresh" content="4680" />
-    <title>Ledger</title>
+    <title>Trial Balance</title>
     <!-- Cascading Style Sheet -->
     <link rel="stylesheet" href="../css/output.css" />
     <link rel="stylesheet" href="../css/style.css" />
@@ -39,13 +39,13 @@
       <div class="table-container">
         <table>
           <thead>
-            <tr>
+            <tr class="account-trial-name">
               <th>Account</th>
               <th colspan="2">Unadjusted</th>
               <th colspan="2">Adjustments</th>
               <th colspan="2">Adjusted</th>
             </tr>
-            <tr>
+            <tr class="account-entry">
               <th></th>
               <th>Debit</th>
               <th>Credit</th>
@@ -56,14 +56,13 @@
             </tr>
           </thead>
           <tbody id="trial-balance-body">
-            <!-- Sample hardcoded entries -->
-            <tr>
+            <tr class="account-items">
               <td>Cash</td>
-              <td>10,000</td>
+              <td>Php 10,000.00</td>
               <td></td>
               <td></td>
-              <td>500</td>
-              <td>9,500</td>
+              <td>Php 500.00</td>
+              <td>Php 9,500.00</td>
               <td></td>
             </tr>
             <tr>
@@ -75,81 +74,9 @@
               <td>6,000</td>
               <td></td>
             </tr>
-            <tr>
-              <td>Supplies</td>
-              <td>2,000</td>
-              <td></td>
-              <td></td>
-              <td>300</td>
-              <td>1,700</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Equipment</td>
-              <td>15,000</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>15,000</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Accounts Payable</td>
-              <td></td>
-              <td>3,000</td>
-              <td>500</td>
-              <td></td>
-              <td></td>
-              <td>2,500</td>
-            </tr>
-            <tr>
-              <td>Notes Payable</td>
-              <td></td>
-              <td>10,000</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>10,000</td>
-            </tr>
-            <tr>
-              <td>Common Stock</td>
-              <td></td>
-              <td>20,000</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>20,000</td>
-            </tr>
-            <tr>
-              <td>Retained Earnings</td>
-              <td></td>
-              <td>5,000</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>5,000</td>
-            </tr>
-            <tr>
-              <td>Sales Revenue</td>
-              <td></td>
-              <td>8,000</td>
-              <td></td>
-              <td>1,000</td>
-              <td></td>
-              <td>9,000</td>
-            </tr>
-            <tr>
-              <td>Salaries Expense</td>
-              <td>4,000</td>
-              <td></td>
-              <td>800</td>
-              <td></td>
-              <td>4,800</td>
-              <td></td>
-            </tr>
           </tbody>
-          <tfoot>
-            <tr>
+          <tfoot id="account-total-wrapper">
+            <tr id="account-total">
               <td>Total</td>
               <td>36,000</td>
               <td>36,000</td>

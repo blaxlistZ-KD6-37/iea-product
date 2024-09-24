@@ -55,26 +55,26 @@
   border-radius: 10px 0 0 0;
 }
 
-/* Trial Balance Specific Styles */
+/*===============
+ * TRIAL BALANCE
+ *============== */
 #trial-balance {
-  padding: 2rem;
-  min-height: calc(
-    100vh - 15rem
-  ); /* Adjust based on header and footer height */
+  width: min(90%, 90dvw);
+  padding: 1rem;
 }
 
-.table-container {
-  max-width: 100%;
-  overflow-x: auto;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  background-color: var(--color-font-secondary);
+#account-total-wrapper {
+  font-weight: bold;
+  background: rgba(238, 204, 126, 0.2);
+  border: 0.1em solid red;
 }
 
 table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
+  border-bottom: 0.35rem solid rgb(217, 0, 0);
+  border-style: ridge;
 }
 
 th,
@@ -87,65 +87,49 @@ td {
 th:first-child,
 td:first-child {
   text-align: left;
-  position: sticky;
-  left: 0;
   background-color: var(--color-font-secondary);
-  z-index: 1;
+  color: var(--color-font-main);
 }
 
 thead {
   background-color: var(--color-font-main);
   color: var(--color-font-secondary);
-  position: sticky;
-  top: 0;
-  z-index: 2;
 }
 
 thead th {
   font-weight: bold;
+  text-align: center;
+}
+
+tr:last-child {
+  text-align: left;
 }
 
 tbody tr:hover {
   background-color: rgba(238, 204, 126, 0.1);
 }
 
-tfoot {
-  font-weight: bold;
-  background-color: rgba(238, 204, 126, 0.2);
+.table-container {
+  max-width: 100%;
+  overflow-x: auto;
+  box-shadow: 0 0.75rem 0.25rem rgba(0, 0, 0, 0.1);
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+  background-color: var(--color-font-secondary);
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  #trial-balance {
-    padding: 1rem;
-  }
-
-  th,
-  td {
-    padding: 0.5rem;
-    font-size: 0.9rem;
-  }
+.account-entry th:first-child {
+  border-bottom: 0.1em solid var(--color-font-main);
 }
 
-/* Scrollbar styles */
-.table-container::-webkit-scrollbar {
-  height: 8px;
-}
-
-.table-container::-webkit-scrollbar-track {
-  background: var(--color-font-secondary);
-}
-
-.table-container::-webkit-scrollbar-thumb {
-  background-color: var(--color-font-main);
-  border-radius: 20px;
-  border: 3px solid var(--color-font-secondary);
-}
-
-.title {
-  font-size: 3rem;
+.account-trial-name {
   text-transform: uppercase;
-  margin: 1rem 0;
+  font-size: 1.25rem;
+}
+
+.account-trial-name th:first-child {
+  border: none;
+  text-align: center;
 }
 
 /*===============
@@ -193,4 +177,38 @@ tfoot {
   color: var(--color-font-secondary);
   transform: translateY(-2px);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  #trial-balance {
+    padding: 1rem;
+  }
+
+  th,
+  td {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* Scrollbar styles */
+.table-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.table-container::-webkit-scrollbar-track {
+  background: var(--color-font-secondary);
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background-color: var(--color-font-main);
+  border-radius: 20px;
+  border: 3px solid var(--color-font-secondary);
+}
+
+.title {
+  font-size: 3rem;
+  text-transform: uppercase;
+  margin: 1rem 0;
 }
