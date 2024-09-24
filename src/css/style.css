@@ -8,10 +8,10 @@
  *============== */
 :root {
   /* Backgrounds */
-  --color-bg-main: #eecc7e;
+  --color-bg-main: #efdeca;
 
   /* Texts */
-  --color-font-main: #6f4e37;
+  --color-font-main: #4b3a29;
   --color-font-secondary: #fff8d9;
   --typography-headings: "Amatic SC", cursive;
   --typography-body: "Merriweather", serif;
