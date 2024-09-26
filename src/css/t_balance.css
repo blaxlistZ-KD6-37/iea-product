@@ -80,7 +80,7 @@ table {
 th,
 td {
   padding: 1rem;
-  text-align: right;
+  /* text-align: right; */
   border-bottom: 1px solid rgba(111, 78, 55, 0.2);
 }
 
@@ -98,7 +98,7 @@ thead {
 
 thead th {
   font-weight: bold;
-  text-align: center;
+  /* text-align: center; */
 }
 
 tr:last-child {
