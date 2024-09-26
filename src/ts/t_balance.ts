@@ -41,15 +41,13 @@ const acception_accounts: string[] = [
   "Cost of Goods Sold",
 ];
 
-let asset_accounts: string[] = financial_accounting_ob
-  .filter((acc) => {
-    return acc.category === "Asset";
-  })
-  .map((acc) => {
-    return acc.name;
-  });
-
-asset_accounts = [...new Set(asset_accounts)];
+let asset_accounts: string[] = [
+  ...new Set(
+    financial_accounting_ob
+      .filter((acc) => acc.category === "Asset")
+      .map((acc) => acc.name)
+  ),
+];
 
 function createAccountRow(
   account: string,
@@ -95,6 +93,10 @@ const accounts: string[] = [
 
 let debit_total: number = 0;
 let credit_total: number = 0;
+let adjustment_debit_total: number = 0;
+let adjustment_credit_total: number = 0;
+let adjusted_debit_total: number = 0;
+let adjusted_credit_total: number = 0;
 
 // Process each account
 accounts.forEach((account) => {
@@ -106,24 +108,20 @@ accounts.forEach((account) => {
   // Unadjusted balance
   const unadjusted_balance = calculateBalance(account_transaction, is_asset);
 
-  // Adjustments (only for acception_accounts)
-  let adjustment_balance = 0;
-
-  if (acception_accounts.includes(account)) {
-    const adjustmentTransactions = account_transaction.filter((acc) => {
-      const curr_date = new Date(acc.date);
-      return (
-        curr_date.getDate() ===
-        getLastDayOfMonth(curr_date.getFullYear(), curr_date.getMonth() + 1)
-      );
-    });
-    adjustment_balance = calculateBalance(adjustmentTransactions, is_asset);
-  }
+  // Adjustments (for all accounts, but only non-zero for acception_accounts)
+  const adjustmentTransactions = account_transaction.filter((acc) => {
+    const curr_date = new Date(acc.date);
+    return (
+      curr_date.getDate() ===
+      getLastDayOfMonth(curr_date.getFullYear(), curr_date.getMonth() + 1)
+    );
+  });
+  const adjustment_balance = calculateBalance(adjustmentTransactions, is_asset);
 
   // Adjusted balance
-  const adjustedBalance = unadjusted_balance + adjustment_balance;
+  const adjusted_balance = unadjusted_balance + adjustment_balance;
 
-  // Determine which column to put the balance in
+  // Determine which column to put the balances in
   let unadjusted_debit = 0,
     unadjusted_credit = 0;
   let adjustment_debit = 0,
@@ -147,16 +145,21 @@ accounts.forEach((account) => {
     (!is_asset && adjustment_balance < 0)
   ) {
     adjustment_debit = Math.abs(adjustment_balance);
-    debit_total += adjustment_debit;
+    adjustment_debit_total += adjustment_debit;
   } else {
     adjustment_credit = Math.abs(adjustment_balance);
-    credit_total += adjustment_credit;
+    adjustment_credit_total += adjustment_credit;
   }
 
-  if ((is_asset && adjustedBalance > 0) || (!is_asset && adjustedBalance < 0)) {
-    adjusted_debit = Math.abs(adjustedBalance);
+  if (
+    (is_asset && adjusted_balance > 0) ||
+    (!is_asset && adjusted_balance < 0)
+  ) {
+    adjusted_debit = Math.abs(adjusted_balance);
+    adjusted_debit_total += adjusted_debit;
   } else {
-    adjusted_credit = Math.abs(adjustedBalance);
+    adjusted_credit = Math.abs(adjusted_balance);
+    adjusted_credit_total += adjusted_credit;
   }
 
   // Create and append the row
@@ -175,10 +178,10 @@ accounts.forEach((account) => {
 const total_row = createAccountRow("Total", [
   debit_total,
   credit_total,
-  0,
-  0, // Assuming adjustments net to zero
-  debit_total,
-  credit_total,
+  adjustment_debit_total,
+  adjustment_credit_total,
+  adjusted_debit_total,
+  adjusted_credit_total,
 ]);
 total_row.id = "account-total";
 document.getElementById("account-total-wrapper")?.appendChild(total_row);
