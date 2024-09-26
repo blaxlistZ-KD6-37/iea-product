@@ -4,7 +4,13 @@ import { Database_Objects } from "./database_types";
 
 type financial_accounting_t = Pick<
   Database_Objects,
-  "name" | "amount" | "is_debit" | "date" | "description" | "category"
+  | "name"
+  | "amount"
+  | "chart_account"
+  | "is_debit"
+  | "date"
+  | "description"
+  | "category"
 >;
 
 const financial_accounting_ob = await api.GetDB<financial_accounting_t[]>(
@@ -18,9 +24,15 @@ const filterUniqueByCategory = (category_type: string): string[] => {
       return acc.category === category_type;
     }
   );
+
+  category_acc.sort((a, b) => {
+    return a.chart_account - b.chart_account;
+  });
+
   const listed_acc: string[] = category_acc.map((acc) => {
     return acc.name;
   });
+
   const unique_list: string[] = [...new Set(listed_acc)];
 
   return unique_list;

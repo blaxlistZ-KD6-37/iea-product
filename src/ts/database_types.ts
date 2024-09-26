@@ -3,6 +3,7 @@ export interface Database_Objects {
   account_id: number;
   name: string;
   category: string;
+  chart_account: number;
   transaction_tab_id: number;
   date: Date;
   description: string;

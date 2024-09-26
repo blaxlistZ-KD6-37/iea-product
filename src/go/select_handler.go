@@ -96,6 +96,7 @@ func (dat *db_handler_st) handlerFinancialAccounts(w http.ResponseWriter, r *htt
 		"date",
 		"description",
 		"category",
+		"chart_account",
 	}
 	tables := []string{
 		"transaction_tab",
@@ -118,6 +119,7 @@ func (dat *db_handler_st) handlerFinancialAccounts(w http.ResponseWriter, r *htt
 			columns[3]: row[columns[3]],
 			columns[4]: row[columns[4]],
 			columns[5]: row[columns[5]],
+			columns[6]: row[columns[6]],
 		}
 	}
 
