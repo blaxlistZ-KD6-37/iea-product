@@ -108,15 +108,18 @@ accounts.forEach((account) => {
   // Unadjusted balance
   const unadjusted_balance = calculateBalance(account_transaction, is_asset);
 
-  // Adjustments (for all accounts, but only non-zero for acception_accounts)
-  const adjustmentTransactions = account_transaction.filter((acc) => {
+  // Adjustments
+  let counter: number = 0;
+  const adjustment_transaction = account_transaction.filter((acc) => {
     const curr_date = new Date(acc.date);
     return (
+      acc.name.includes(acception_accounts[counter++]) &&
       curr_date.getDate() ===
-      getLastDayOfMonth(curr_date.getFullYear(), curr_date.getMonth() + 1)
+        getLastDayOfMonth(curr_date.getFullYear(), curr_date.getMonth() + 1)
     );
   });
-  const adjustment_balance = calculateBalance(adjustmentTransactions, is_asset);
+
+  const adjustment_balance = calculateBalance(adjustment_transaction, is_asset);
 
   // Adjusted balance
   const adjusted_balance = unadjusted_balance + adjustment_balance;
@@ -184,4 +187,7 @@ const total_row = createAccountRow("Total", [
   adjusted_credit_total,
 ]);
 total_row.id = "account-total";
-document.getElementById("account-total-wrapper")?.appendChild(total_row);
+const total_wrapper = <HTMLTableElement>(
+  document.getElementById("account-total-wrapper")
+);
+total_wrapper.appendChild(total_row);
