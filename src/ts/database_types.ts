@@ -11,3 +11,14 @@ export interface Database_Objects {
   amount: number;
   is_debit: boolean;
 }
+
+export type financial_accounting_t = Pick<
+  Database_Objects,
+  | "name"
+  | "amount"
+  | "chart_account"
+  | "is_debit"
+  | "date"
+  | "description"
+  | "category"
+>;
