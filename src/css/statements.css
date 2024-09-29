@@ -72,6 +72,7 @@
 .final {
   font-size: 1.15rem;
   border-bottom: 2px double rgb(165, 1, 1);
+  background: rgba(238, 204, 126, 0.2);
 }
 
 /* Balance Sheet specific styles */
