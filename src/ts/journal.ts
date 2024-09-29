@@ -1,15 +1,8 @@
 import "../css/style.css";
-import api from "./api";
-import { Database_Objects } from "./database_types";
+import { financial_accounting_t } from "./database_types";
+import util from "./utils";
 
-type financial_accounting_t = Pick<
-  Database_Objects,
-  "name" | "amount" | "is_debit" | "date" | "description" | "category"
->;
-
-const financial_accounting_ob = await api.GetDB<financial_accounting_t[]>(
-  "financial_account"
-);
+const financial_accounting_ob = util.FilterDate(9);
 
 type account_sig =
   | "debit_entry"
