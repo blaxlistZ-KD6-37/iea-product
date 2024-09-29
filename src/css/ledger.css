@@ -393,7 +393,7 @@ body {
 
   .acc-container_wrapper {
     overflow-y: hidden;
-    grid-auto-columns: 36%;
+    grid-auto-columns: 40%;
   }
 
   .revenue-tile,
