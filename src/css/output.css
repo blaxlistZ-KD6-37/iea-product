@@ -725,21 +725,3 @@ video {
 .filter {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
-
-.transition-all {
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
-}
-
-.delay-75 {
-  transition-delay: 75ms;
-}
-
-.hover\:min-h-72:hover {
-  min-height: 18rem;
-}
-
-.hover\:max-w-72:hover {
-  max-width: 18rem;
-}

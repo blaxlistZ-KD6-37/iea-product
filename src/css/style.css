@@ -80,6 +80,10 @@ h6 {
  * Frameworks
  *============== */
 
+#main-frame {
+  width: min(90%, 90dvw);
+}
+
 .frameworks {
   width: 200px;
   height: 200px;
@@ -92,13 +96,13 @@ h6 {
   font-weight: bold;
   text-transform: uppercase;
   border-radius: 50%;
-  transition: all 0.3s ease;
+  transition: all 0.8s ease;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   cursor: pointer;
 }
 
 .frameworks:hover {
-  transform: scale(1.1);
+  transform: rotate(720deg) scale(1.1);
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
 }
 
@@ -111,18 +115,12 @@ h6 {
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  #main-frame {
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(5, 1fr);
-    gap: calc(var(--spacing-unit) * 2);
-  }
-
   .frameworks {
-    width: 150px;
-    height: 150px;
+    width: 7rem;
+    height: 7rem;
   }
 
   .subject {
-    font-size: 1rem;
+    font-size: 0.8rem;
   }
 }
