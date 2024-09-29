@@ -17,13 +17,15 @@ const statement_date = <NodeListOf<HTMLSpanElement>>(
   document.querySelectorAll(".current-date")
 );
 
-const capital_start_date = <HTMLSpanElement>(
-  document.querySelector(".month-capital")
+const capital_date = <NodeListOf<HTMLSpanElement>>(
+  document.querySelectorAll(".month-capital")
 );
 
-capital_start_date.textContent = `${new Date(financial_accounting_ob[0].date)
-  .toDateString()
-  .slice(4, 7)}.`;
+capital_date.forEach((capital) => {
+  capital.textContent = `${new Date(financial_accounting_ob[0].date)
+    .toDateString()
+    .slice(4, 7)}.`;
+});
 
 statement_date.forEach((statement) => {
   const curr_date: string = `${new Date(financial_accounting_ob[0].date)
