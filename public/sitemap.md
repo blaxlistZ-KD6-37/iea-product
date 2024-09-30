@@ -7,14 +7,14 @@
     1. People and Roles
     1. Business and Product Analysis
 1. Financial Statements
-    1. Income Statement
-    1. Statement of Changes in Equity
-    1. Balance Sheet
-    1. Cash Flow Statement
+    1. Income Statement **[x]**
+    1. Statement of Changes in Equity **[x]**
+    1. Balance Sheet **[x]**
 1. PostScript
     1. Journal Transactions **[x]**
     1. Ledger **[x]**
-    1. Trial Balance
+    1. Trial Balance **[x]**
+    1. Closing Entries
     1. Others
         1. Charts/Graphs
         1. Design Specifications
