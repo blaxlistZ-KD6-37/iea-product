@@ -60,13 +60,18 @@ function calculateBalance(
   transactions: financial_accounting_t[],
   is_asset: boolean
 ): number {
-  return transactions.reduce((balance, item) => {
-    if (is_asset) {
-      return item.is_debit ? balance + item.amount : balance - item.amount;
-    } else {
-      return item.is_debit ? balance - item.amount : balance + item.amount;
-    }
-  }, 0);
+  return Number(
+    transactions
+      .reduce((balance, item) => {
+        const amount = Number(item.amount.toFixed(2)); // Ensure 2 decimal places
+        if (is_asset) {
+          return item.is_debit ? balance + amount : balance - amount;
+        } else {
+          return item.is_debit ? balance - amount : balance + amount;
+        }
+      }, 0)
+      .toFixed(2)
+  ); // Round the final result to 2 decimal places
 }
 
 // Get unique accounts
@@ -87,26 +92,42 @@ let adjusted_credit_total: number = 0;
 
 // Process each account
 accounts.forEach((account) => {
-  const account_transaction = financial_accounting_ob.filter(
-    (acc) => acc.name === account
-  );
+  const account_transaction = financial_accounting_ob.filter((acc) => {
+    return acc.name === account;
+  });
+
   const is_asset = asset_accounts.includes(account);
 
-  // Unadjusted balance
-  const unadjusted_balance = calculateBalance(account_transaction, is_asset);
-
-  // Adjustments
-  let counter: number = 0;
-  const adjustment_transaction = account_transaction.filter((acc) => {
-    const curr_date = new Date(acc.date);
+  const unadjusted_transaction = account_transaction.filter((acc) => {
     return (
-      acc.name.includes(acception_accounts[counter++]) &&
-      curr_date.getDate() ===
-        getLastDayOfMonth(curr_date.getFullYear(), curr_date.getMonth() + 1)
+      new Date(acc.date).getDate() <
+      getLastDayOfMonth(
+        new Date(acc.date).getFullYear(),
+        new Date(acc.date).getMonth() + 1
+      )
     );
   });
 
-  const adjustment_balance = calculateBalance(adjustment_transaction, is_asset);
+  // Unadjusted balance
+  const unadjusted_balance = calculateBalance(unadjusted_transaction, is_asset);
+
+  // Adjustments
+  const adjustment_transaction = account_transaction.filter((acc) => {
+    const curr_date = new Date(acc.date);
+    const lastDayOfMonth = getLastDayOfMonth(
+      curr_date.getFullYear(),
+      curr_date.getMonth() + 1
+    );
+
+    return (
+      acception_accounts.includes(acc.name) &&
+      curr_date.getDate() === lastDayOfMonth
+    );
+  });
+
+  const adjustment_balance = Number(
+    calculateBalance(adjustment_transaction, is_asset)
+  );
 
   // Adjusted balance
   const adjusted_balance = unadjusted_balance + adjustment_balance;
@@ -130,7 +151,11 @@ accounts.forEach((account) => {
     credit_total += unadjusted_credit;
   }
 
-  if (
+  if (Math.abs(adjustment_balance) < 0.01) {
+    // Ignore balances smaller than 1 cent
+    adjustment_debit = 0;
+    adjustment_credit = 0;
+  } else if (
     (is_asset && adjustment_balance > 0) ||
     (!is_asset && adjustment_balance < 0)
   ) {
