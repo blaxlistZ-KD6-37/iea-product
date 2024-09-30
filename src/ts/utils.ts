@@ -2,6 +2,8 @@ import "../css/style.css";
 import api from "./api";
 import { financial_accounting_t } from "./database_types";
 
+export const month: number = 9;
+
 export const acc_ob = await api.GetDB<financial_accounting_t[]>(
   "financial_account"
 );
@@ -16,5 +18,6 @@ export const FilterDate = (target_month: number): financial_accounting_t[] => {
 };
 
 export default {
+  month,
   FilterDate,
 };

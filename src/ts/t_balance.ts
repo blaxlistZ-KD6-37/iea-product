@@ -2,7 +2,7 @@ import "../css/style.css";
 import { financial_accounting_t } from "./database_types";
 import util from "./utils";
 
-const financial_accounting_ob = util.FilterDate(9);
+const financial_accounting_ob = util.FilterDate(util.month);
 
 // Getting the Trial Balance Body
 const trial_body = <HTMLTableElement>(
@@ -26,6 +26,7 @@ const acception_accounts: string[] = [
   "Unearned Revenue",
   "Inventory",
   "Cost of Goods Sold",
+  "Income Summary",
 ];
 
 let asset_accounts: string[] = [

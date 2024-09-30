@@ -2,7 +2,7 @@ import "../css/style.css";
 import { Database_Objects, financial_accounting_t } from "./database_types";
 import util from "./utils";
 
-const financial_accounting_ob = util.FilterDate(9);
+const financial_accounting_ob = util.FilterDate(util.month);
 
 // Filtering Unique Names
 const filterUniqueByCategory = (category_type: string): string[] => {
