@@ -14,6 +14,7 @@ func (dat *db_handler_st) handlerAccount(w http.ResponseWriter, r *http.Request)
 		"account_id",
 		"name",
 		"category",
+		"chart_account",
 	}
 	table_name := strings.Trim(columns[0], "_id")
 	transaction_result, err := dat.selectionDatabase(table_name, columns[0], columns...)
@@ -28,6 +29,7 @@ func (dat *db_handler_st) handlerAccount(w http.ResponseWriter, r *http.Request)
 			columns[0]: row[columns[0]],
 			columns[1]: row[columns[1]],
 			columns[2]: row[columns[2]],
+			columns[3]: row[columns[3]],
 		}
 	}
 
