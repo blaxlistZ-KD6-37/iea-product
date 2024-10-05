@@ -5,17 +5,13 @@ const frameworks = <NodeListOf<HTMLElement>>(
 );
 const framework_vec: HTMLElement[] = Array.from(frameworks);
 
-const non_pivot_vec = framework_vec.filter(
-  (_, ndx: number): boolean => {
-    return ndx !== 2;
-  }
-);
+const non_pivot_vec = framework_vec.filter((_, ndx: number): boolean => {
+  return ndx !== 2;
+});
 
-const pivot_vec = <HTMLElement>framework_vec.find(
-  (_, ndx: number): boolean => {
-    return ndx === 2;
-  }
-);
+const pivot_vec = <HTMLElement>framework_vec.find((_, ndx: number): boolean => {
+  return ndx === 2;
+});
 
 pivot_vec.addEventListener("click", () => {
   non_pivot_vec.forEach((frame) => {
