@@ -110,7 +110,7 @@ const createEntry = (curr_date: string): void => {
   for (let ndx = 0; ndx < Math.ceil(finance.length) / 2; ndx++) {
     const temp_ndx = 2 * ndx;
     const entry_date: HTMLTimeElement = createDateElement(
-      finance[temp_ndx].date
+      new Date(finance[temp_ndx].date)
     );
     const account_elements: account_entries = createAccountElement(
       finance[temp_ndx].name,
