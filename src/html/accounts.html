@@ -42,7 +42,8 @@
         <!-- END ACCOUNTING HEADING -->
 
         <!-- ACCOUNT POST -->
-        <form action="/iea-product/form" method="post" class="account-post">
+        <!-- action="http://localhost:8080/A1_/runlive/form" -->
+        <form action="/form" method="post" class="account-post">
           <section class="type-wrapper">
             <div class="debit-part">
               <div class="acc-type_n">Debit</div>
@@ -62,6 +63,7 @@
                   name="account-cred"
                   size="4"
                   class="account-cred"
+                  required
                 ></select>
               </div>
             </div>
@@ -71,10 +73,12 @@
             <div class="amount-input">
               <div class="currency text-right">&#8369;</div>
               <input
-                type="text"
+                type="number"
                 class="amt"
                 name="amt"
-                placeholder="1,234.56"
+                placeholder="1234.56"
+                min="0"
+                max="999999"
                 required
               />
             </div>
