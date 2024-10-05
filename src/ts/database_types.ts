@@ -5,7 +5,7 @@ export interface Database_Objects {
   category: string;
   chart_account: number;
   transaction_tab_id: number;
-  date: Date;
+  date: Date | string;
   description: string;
   transaction_detail_id: number;
   amount: number;
