@@ -15,7 +15,7 @@ new Chart(chart, {
     labels: sales.map((row) => new Date(row.date).toUTCString().slice(0, 11)),
     datasets: [
       {
-        label: "Acquisitions by month",
+        label: "Monthly Cash Credit",
         data: sales.map((row) => row.amount),
       },
     ],
