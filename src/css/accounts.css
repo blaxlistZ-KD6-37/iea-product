@@ -56,13 +56,15 @@
   justify-content: center;
   align-items: center;
   gap: 1em;
+  transition: all 0.4s ease;
 }
 
 .type-wrapper {
   flex: 1;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 1em;
+  transition: all 0.4s ease;
 }
 
 .debit-part,
@@ -97,7 +99,7 @@
   border-radius: 0.25rem;
   text-align: center;
   padding: 0.25rem;
-  box-shadow: -0.5rem 0rem 0.25rem rgba(0, 0, 0, 0.361);
+  box-shadow: -0.1rem 0rem 1rem rgba(0, 0, 0, 0.361);
   margin-inline-start: auto;
 }
 
@@ -155,6 +157,7 @@
 }
 
 .desc:focus,
+.desc:hover,
 .amount-input:hover {
   outline-width: 0.1rem;
   outline-style: solid;
@@ -170,15 +173,13 @@
   outline-style: none;
 }
 
-::-webkit-scrollbar {
-  width: 0.25em;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--color-bg-main);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--color-font-main);
-  border-radius: 10rem;
+@media (min-width: 60em) {
+  .account-post {
+    transition: all 0.4s ease;
+  }
+  .type-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    transition: all 0.4s ease;
+  }
 }
