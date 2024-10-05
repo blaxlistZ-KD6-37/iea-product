@@ -17,8 +17,8 @@
     1. Closing Entries
     1. Others
         1. Charts/Graphs
+        1. Accounts Insertion **[x]**
         1. Design Specifications
         1. Supplier Contracts*
-        1. Marketing Campaign Calendar*
         1. Customer Feedback Survey Results
         1. Sustainability Impact Report
