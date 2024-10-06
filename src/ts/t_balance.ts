@@ -37,10 +37,10 @@ let asset_accounts: string[] = [
   ),
 ];
 
-function createAccountRow(
+const createAccountRow = (
   account: string,
   data: number[]
-): HTMLTableRowElement {
+): HTMLTableRowElement => {
   const row = document.createElement("tr");
   row.classList.add("account-items");
 
@@ -55,16 +55,16 @@ function createAccountRow(
   });
 
   return row;
-}
+};
 
-function calculateBalance(
+const calculateBalance = (
   transactions: financial_accounting_t[],
   is_asset: boolean
-): number {
+): number => {
   return Number(
     transactions
       .reduce((balance, item) => {
-        const amount = Number(item.amount.toFixed(2)); // Ensure 2 decimal places
+        const amount = Number(item.amount.toFixed(2));
         if (is_asset) {
           return item.is_debit ? balance + amount : balance - amount;
         } else {
@@ -72,8 +72,8 @@ function calculateBalance(
         }
       }, 0)
       .toFixed(2)
-  ); // Round the final result to 2 decimal places
-}
+  );
+};
 
 // Get unique accounts
 const accounts: string[] = [
