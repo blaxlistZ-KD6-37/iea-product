@@ -1,8 +1,7 @@
 import "../css/style.css";
-import { financial_accounting_t } from "./database_types";
-import util from "./utils";
+import { FilterDate, CalculateItem, month } from "./utils";
 
-const financial_accounting_ob = util.FilterDate(util.month);
+const financial_accounting_ob = FilterDate(month);
 
 const categories: string[] = [
   "Asset",
@@ -50,30 +49,6 @@ const separateAccounts = (cat: string): string[] => {
   return accounts;
 };
 
-const calculateItem = (type: financial_accounting_t[]): number => {
-  const debit_total: number = type
-    .filter((acc) => {
-      return acc.is_debit === true;
-    })
-    .reduce((acc, curr_item) => {
-      acc += curr_item.amount;
-      return acc;
-    }, 0);
-
-  const credit_total: number = type
-    .filter((acc) => {
-      return acc.is_debit === false;
-    })
-    .reduce((acc, curr_item) => {
-      acc += curr_item.amount;
-      return acc;
-    }, 0);
-
-  const balance: number = Math.abs(debit_total - credit_total);
-
-  return balance;
-};
-
 // Income Statement
 const createAccountRow = (
   account_value: number,
@@ -109,7 +84,7 @@ const createStatement = (
     const data = financial_accounting_ob.filter((sale) => {
       return sale.name == item;
     });
-    const total_data = calculateItem(data);
+    const total_data = CalculateItem(data);
     const data_element = createAccountRow(total_data, item, class_name);
     element_parent.appendChild(data_element);
   });
@@ -118,7 +93,7 @@ const createStatement = (
   const balance_data = financial_accounting_ob.filter((balance) => {
     return balance.category == category;
   });
-  const total_balance_data = calculateItem(balance_data);
+  const total_balance_data = CalculateItem(balance_data);
   const item_cell_name: HTMLTableCellElement = document.createElement("td");
   item_cell_name.textContent = cell;
   const total_balance_amount: HTMLTableCellElement =
@@ -210,10 +185,10 @@ const appendEquityChange = (): void => {
   });
 
   const equity_totals = [
-    calculateItem(day_one),
-    calculateItem(day_n),
+    CalculateItem(day_one),
+    CalculateItem(day_n),
     net_income_amt,
-    calculateItem(withdrawals),
+    CalculateItem(withdrawals),
   ];
 
   const equity_child = <HTMLTableElement>equity.firstElementChild;
@@ -264,7 +239,7 @@ const createBalanceSheet = (): void => {
       const liab_acc = financial_accounting_ob.filter((acc) => {
         return acc.name == liability;
       });
-      liab_total = calculateItem(liab_acc);
+      liab_total = CalculateItem(liab_acc);
       liability_element.appendChild(
         createAccountRow(liab_total, liability, "liab")
       );

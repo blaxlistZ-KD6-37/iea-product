@@ -17,7 +17,32 @@ export const FilterDate = (target_month: number): financial_accounting_t[] => {
   return new_accounting_ob;
 };
 
+export const CalculateItem = (type: financial_accounting_t[]): number => {
+  const debit_total: number = type
+    .filter((acc) => {
+      return acc.is_debit === true;
+    })
+    .reduce((acc, curr_item) => {
+      acc += curr_item.amount;
+      return acc;
+    }, 0);
+
+  const credit_total: number = type
+    .filter((acc) => {
+      return acc.is_debit === false;
+    })
+    .reduce((acc, curr_item) => {
+      acc += curr_item.amount;
+      return acc;
+    }, 0);
+
+  const balance: number = Math.abs(debit_total - credit_total);
+
+  return balance;
+};
+
 export default {
   month,
   FilterDate,
+  CalculateItem,
 };
