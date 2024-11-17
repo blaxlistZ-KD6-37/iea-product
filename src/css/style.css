@@ -102,7 +102,7 @@ h6 {
 }
 
 .frameworks:hover {
-  transform: rotate(720deg) scale(1.1);
+  transform: rotate(720deg) scale(1.05);
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
 }
 
