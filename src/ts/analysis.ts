@@ -10,6 +10,10 @@ export const PercentChange = (
   total_sales: number,
   currency_change: number
 ): number => {
+  if (total_sales === 0) {
+    return 0;
+  }
+
   const percent_ratio: number = currency_change / total_sales;
 
   return percent_ratio * 100;
@@ -20,6 +24,10 @@ export const CommonSizePercentage = (
   comparison_amount: number,
   base_amount: number
 ): number => {
+  if (base_amount === 0) {
+    return 0;
+  }
+
   const comparison_ratio: number = comparison_amount / base_amount;
 
   return comparison_ratio * 100;
@@ -35,6 +43,10 @@ export const InventoryTurnOver = (
   cost_of_goods_sold: number,
   inventory: Account_Position_T
 ): number => {
+  if (inventory.beginning_position + inventory.ending_position === 0) {
+    return 0;
+  }
+
   const inventory_turnover =
     (2 * cost_of_goods_sold) /
     (inventory.beginning_position + inventory.ending_position);
@@ -46,6 +58,10 @@ export const DaySalesInventory = (
   cost_of_goods_sold: number,
   ending_inventory: number
 ): number => {
+  if (cost_of_goods_sold === 0) {
+    return 0;
+  }
+
   const days_sales_inventory = ending_inventory / cost_of_goods_sold;
 
   return days_sales_inventory * 365;
@@ -53,6 +69,9 @@ export const DaySalesInventory = (
 
 // Profitability Ratios
 export const ProfitMargin = (net_sales: number, net_income: number): number => {
+  if (net_sales === 0) {
+    return 0;
+  }
   const profit_margin = net_income / net_sales;
 
   return profit_margin * 100;
@@ -62,6 +81,10 @@ export const ReturnOnTotalAssets = (
   net_income: number,
   total_assets: Account_Position_T
 ): number => {
+  if (total_assets.beginning_position + total_assets.ending_position === 0) {
+    return 0;
+  }
+
   const return_on_total_assets =
     (2 * net_income) /
     (total_assets.beginning_position + total_assets.ending_position);
