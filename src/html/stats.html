@@ -7,7 +7,7 @@
     <meta name="author" content="blaxlistZ" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="refresh" content="4680" />
-    <title>Statistics</title>
+    <title>Financial Analysis</title>
     <!-- Cascading Style Sheet -->
     <link rel="stylesheet" href="../css/output.css" />
     <link rel="stylesheet" href="../css/style.css" />
@@ -24,7 +24,21 @@
   </head>
   <body>
     <div class="canvas-items flex items-center justify-center">
-      <canvas id="net-income"></canvas>
+      <section class="horizontal-analysis">
+        <canvas id="dollar-change"></canvas>
+        <canvas id="percent-change"></canvas>
+      </section>
+      <section class="vertical-analysis">
+        <canvas id="common-size-percentage"></canvas>
+      </section>
+      <section class="efficiency-ratios">
+        <canvas id="inventory-turnover"></canvas>
+        <canvas id="days-sales-inventory"></canvas>
+      </section>
+      <section class="profitability-ratios">
+        <canvas id="profit-margin"></canvas>
+        <canvas id="return-on-total-assets"></canvas>
+      </section>
     </div>
     <!-- TypeScript -->
     <script type="module" src="../ts/stats.ts"></script>
