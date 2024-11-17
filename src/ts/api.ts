@@ -25,6 +25,26 @@ const requestOptions = (
   return path;
 };
 
+export const GetAPI = async <T>(): Promise<T> => {
+  try {
+    const response = await fetch(
+      `https://open.er-api.com/v6/latest/PHP`,
+      requestOptions("GET", new_header)
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data: T = await response.json();
+
+    return data;
+  } catch (error) {
+    console.error("Error in getting the database:", error);
+    throw error;
+  }
+};
+
 export const GetDB = async <T>(path: string): Promise<T> => {
   try {
     const response = await fetch(
@@ -65,6 +85,7 @@ export const PostDB = async <T>(path: string, obj: T): Promise<void> => {
 };
 
 export default {
+  GetAPI,
   GetDB,
   PostDB,
 };
