@@ -1,6 +1,103 @@
-.canvas-items {
-  /* width: 960px; */
-  /* margin-inline: auto; */
+/* Custom Properties */
+@import url("https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Josefin+Slab&family=Merriweather&family=Satisfy&display=swap");
+
+:root {
+  --color-bg-main: #efdeca;
+  --color-font-main: #4b3a29;
+  --color-font-secondary: #fff8d9;
+  --color-accent: #8a6246;
+  --spacing-unit: 8px;
 }
 
+/* Base Styles */
+.canvas-items {
+  @apply min-h-screen p-8 bg-[#efdeca];
+  /* display: grid;
+  grid-template-columns: repeat(5, 1fr); */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
 
+/* Chart Sections */
+section {
+  @apply bg-[#fff8d9] rounded-lg p-6 shadow-lg border-2 border-[#4b3a29];
+  transition: transform 0.3s ease;
+}
+
+section:hover {
+  @apply shadow-xl;
+  transform: translateY(-5px);
+}
+
+/* Canvas Styling */
+canvas {
+  @apply mb-8 rounded-md bg-[#fcffe9] p-4;
+  border: 2px solid var(--color-font-main);
+}
+
+/* Section-specific styles */
+.horizontal-analysis {
+  @apply relative;
+}
+
+.horizontal-analysis::before {
+  content: "Horizontal Analysis";
+  @apply absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 
+         bg-[#4b3a29] text-[#fff8d9] rounded-full font-bold;
+  font-size: 0.85rem;
+}
+
+.vertical-analysis {
+  @apply relative;
+}
+
+.vertical-analysis::before {
+  content: "Vertical Analysis";
+  @apply absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 
+         bg-[#4b3a29] text-[#fff8d9] rounded-full font-bold;
+  font-size: 1rem;
+}
+
+.efficiency-ratios {
+  @apply relative;
+}
+
+.efficiency-ratios::before {
+  content: "Efficiency Ratios";
+  @apply absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 
+         bg-[#4b3a29] text-[#fff8d9] rounded-full font-bold;
+  font-size: 1rem;
+}
+
+.profitability-ratios {
+  @apply relative;
+}
+
+.profitability-ratios::before {
+  content: "Profitability Ratios";
+  @apply absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 
+         bg-[#4b3a29] text-[#fff8d9] rounded-full font-bold;
+  font-size: 0.85rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .canvas-items {
+    @apply grid-cols-1 gap-12 p-4;
+  }
+
+  section::before {
+    @apply text-lg;
+  }
+
+  canvas {
+    @apply mb-4 p-2;
+  }
+}
+
+/* Chart.js Customization */
+canvas {
+  font-family: "Josefin Slab", serif;
+  padding: 0;
+}

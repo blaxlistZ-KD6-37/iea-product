@@ -378,7 +378,7 @@ const IncomeStatementPercentChange = (
 const dollar_changes: Income_Statement_T[] = [];
 const percent_changes: Income_Statement_T[] = [];
 
-type Horizontal_Changes_T = {
+type Income_Changes_T = {
   coldbrew_sales: number[];
   cost_of_goods_sold: number[];
   supplies_expense: number[];
@@ -388,7 +388,7 @@ type Horizontal_Changes_T = {
   miscallaneous_expense: number[];
 };
 
-const horizontal_dollar: Horizontal_Changes_T = {
+const horizontal_dollar: Income_Changes_T = {
   coldbrew_sales: [],
   cost_of_goods_sold: [],
   supplies_expense: [],
@@ -398,7 +398,7 @@ const horizontal_dollar: Horizontal_Changes_T = {
   miscallaneous_expense: [],
 };
 
-const horizontal_percent: Horizontal_Changes_T = {
+const horizontal_percent: Income_Changes_T = {
   coldbrew_sales: [],
   cost_of_goods_sold: [],
   supplies_expense: [],
@@ -490,6 +490,142 @@ createAccountChart(
     {
       label: "Supplies Expense",
       data: horizontal_percent.supplies_expense,
+    },
+  ],
+  "bar"
+);
+
+// Vertical Analysis
+const vertical_analysis_chart_DOCUMENT = <HTMLElement>(
+  document.querySelector(".vertical-analysis")
+);
+const common_size_percentage_chart_DOCUMENT = <HTMLCanvasElement>(
+  vertical_analysis_chart_DOCUMENT.firstElementChild
+);
+
+const IncomeStatementCommonSize = (
+  month_current: number
+): Income_Statement_T => {
+  const current_statements: Income_Statement_T = {
+    coldbrew_sales: CalculateSpecificAccount("Coldbrew Sales", month_current),
+    cost_of_goods_sold: CalculateSpecificAccount(
+      "Cost of Goods Sold",
+      month_current
+    ),
+    supplies_expense: CalculateSpecificAccount(
+      "Supplies Expense",
+      month_current
+    ),
+    water_expense: CalculateSpecificAccount("Water Expense", month_current),
+    delivery_expense: CalculateSpecificAccount(
+      "Delivery Expense",
+      month_current
+    ),
+    depreciation_expense_equipments: CalculateSpecificAccount(
+      "Depreciation Expense - Equipments",
+      month_current
+    ),
+    salaries_and_wages: CalculateSpecificAccount(
+      "Salaries and Wages",
+      month_current
+    ),
+    miscallaneous_expense: CalculateSpecificAccount(
+      "Miscallaneous Expense",
+      month_current
+    ),
+  };
+
+  const common_change = {
+    coldbrew_sales: analysis.CommonSizePercentage(
+      current_statements.coldbrew_sales,
+      current_statements.coldbrew_sales
+    ),
+    cost_of_goods_sold: analysis.CommonSizePercentage(
+      current_statements.cost_of_goods_sold,
+      current_statements.coldbrew_sales
+    ),
+    supplies_expense: analysis.CommonSizePercentage(
+      current_statements.supplies_expense,
+      current_statements.coldbrew_sales
+    ),
+    water_expense: analysis.CommonSizePercentage(
+      current_statements.water_expense,
+      current_statements.coldbrew_sales
+    ),
+    delivery_expense: analysis.CommonSizePercentage(
+      current_statements.delivery_expense,
+      current_statements.coldbrew_sales
+    ),
+    depreciation_expense_equipments: analysis.CommonSizePercentage(
+      current_statements.depreciation_expense_equipments,
+      current_statements.coldbrew_sales
+    ),
+    salaries_and_wages: analysis.CommonSizePercentage(
+      current_statements.salaries_and_wages,
+      current_statements.coldbrew_sales
+    ),
+    miscallaneous_expense: analysis.CommonSizePercentage(
+      current_statements.miscallaneous_expense,
+      current_statements.coldbrew_sales
+    ),
+  };
+
+  return common_change;
+};
+
+const common_size_changes: Income_Statement_T[] = [];
+
+const vertical_common_percent: Income_Changes_T = {
+  coldbrew_sales: [],
+  cost_of_goods_sold: [],
+  supplies_expense: [],
+  water_expense: [],
+  delivery_expense: [],
+  depreciation_expense_equipments: [],
+  miscallaneous_expense: [],
+};
+
+month_range.forEach((month, ndx) => {
+  common_size_changes.push(IncomeStatementCommonSize(month));
+  vertical_common_percent.coldbrew_sales[ndx] =
+    common_size_changes[ndx].coldbrew_sales;
+  vertical_common_percent.cost_of_goods_sold[ndx] =
+    common_size_changes[ndx].cost_of_goods_sold;
+  vertical_common_percent.delivery_expense[ndx] =
+    common_size_changes[ndx].delivery_expense;
+  vertical_common_percent.depreciation_expense_equipments[ndx] =
+    common_size_changes[ndx].depreciation_expense_equipments;
+  vertical_common_percent.miscallaneous_expense[ndx] =
+    common_size_changes[ndx].miscallaneous_expense;
+  vertical_common_percent.supplies_expense[ndx] =
+    common_size_changes[ndx].supplies_expense;
+  vertical_common_percent.water_expense[ndx] =
+    common_size_changes[ndx].water_expense;
+});
+
+createAccountChart(
+  common_size_percentage_chart_DOCUMENT,
+  label_accounts,
+  [
+    {
+      label: "Coldbrew Sales",
+      data: vertical_common_percent.coldbrew_sales,
+    },
+    {
+      label: "Delivery Expense",
+      data: vertical_common_percent.delivery_expense,
+    },
+    {
+      label: "Depreciation Expense - Equipments",
+      data: vertical_common_percent.depreciation_expense_equipments,
+    },
+    {
+      label: "Miscallaneous Expense",
+      data: vertical_common_percent.miscallaneous_expense,
+    },
+    {
+      label: "Supplies Expense",
+      data: vertical_common_percent.supplies_expense,
     },
   ],
   "bar"
