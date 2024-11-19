@@ -118,6 +118,7 @@ h6 {
   .frameworks {
     width: 7rem;
     height: 7rem;
+    transition: all 0.8 ease;
   }
 
   .subject {
