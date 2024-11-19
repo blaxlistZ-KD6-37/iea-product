@@ -8,7 +8,11 @@ import {
 } from "chart.js";
 import { acc_ob, CalculateItem } from "./utils";
 import { financial_accounting_t } from "./database_types";
-import analysis, { Account_Position_T, ProfitMargin } from "./analysis";
+import analysis, {
+  Account_Position_T,
+  ProfitMargin,
+  TotalAssetTurnover,
+} from "./analysis";
 
 Chart.register(...registerables);
 
@@ -629,4 +633,59 @@ createAccountChart(
     },
   ],
   "bar"
+);
+
+// Efficiency Ratios
+const efficiency_ratios_chart_DOCUMENT = <HTMLElement>(
+  document.querySelector(".efficiency-ratios")
+);
+
+const total_assets_turnover_chart_DOCUMENT = <HTMLCanvasElement>(
+  efficiency_ratios_chart_DOCUMENT.firstElementChild
+);
+
+const inventory_turnover_chart_DOCUMENT = <HTMLCanvasElement>(
+  total_assets_turnover_chart_DOCUMENT.nextElementSibling
+);
+
+const days_sales_inventory_chart_DOCUMENT = <HTMLCanvasElement>(
+  inventory_turnover_chart_DOCUMENT.nextElementSibling
+);
+
+const total_assets_turnover: number[] = [];
+
+month_range.forEach((month) => {
+  const net_sales = CalculateItem(
+    specifyAccountToMonth(month).filter((account) => {
+      return account.chart_account === 600;
+    })
+  );
+
+  const assets: Account_Position_T = {
+    beginning_position: CalculateItem(
+      specifyAccountToMonth(month - 1).filter((account) => {
+        return account.category === "Asset";
+      })
+    ),
+    ending_position: CalculateItem(
+      specifyAccountToMonth(month).filter((account) => {
+        return account.category === "Asset";
+      })
+    ),
+  };
+
+  total_assets_turnover.push(TotalAssetTurnover(net_sales, assets));
+});
+
+createAccountChart(
+  total_assets_turnover_chart_DOCUMENT,
+  label_accounts,
+  [
+    {
+      label: "Total Assets Turnover",
+      data: total_assets_turnover,
+    },
+  ],
+  "bar",
+  ".00"
 );
