@@ -39,6 +39,18 @@ export type Account_Position_T = {
   ending_position: number;
 };
 
+export const TotalAssetTurnover = (
+  net_sales: number,
+  assets: Account_Position_T
+): number => {
+  const average_total_assets =
+    (assets.beginning_position + assets.ending_position) / 2;
+
+  const total_assets_turnover = net_sales / average_total_assets;
+
+  return total_assets_turnover;
+};
+
 export const InventoryTurnOver = (
   cost_of_goods_sold: number,
   inventory: Account_Position_T
@@ -96,6 +108,7 @@ export default {
   DollarChange,
   PercentChange,
   CommonSizePercentage,
+  TotalAssetTurnover,
   InventoryTurnOver,
   DaySalesInventory,
   ProfitMargin,
