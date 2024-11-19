@@ -21,7 +21,7 @@
 
 /* Chart Sections */
 section {
-  @apply bg-[#fff8d9] rounded-lg p-6 shadow-lg border-2 border-[#4b3a29];
+  @apply bg-[#fff8d9] rounded-lg p-6 shadow-lg;
   transition: transform 0.3s ease;
 }
 
@@ -33,7 +33,7 @@ section:hover {
 /* Canvas Styling */
 canvas {
   @apply mb-8 rounded-md bg-[#fcffe9] p-4;
-  border: 2px solid var(--color-font-main);
+  border: 1px solid var(--color-font-main);
 }
 
 /* Section-specific styles */
