@@ -38,6 +38,7 @@ body {
 }
 
 .title {
+  font-family: var(--typography-headings);
   display: flex;
   text-transform: uppercase;
   text-align: center;
@@ -85,6 +86,7 @@ body {
 .asset-tile,
 .liability-tile,
 .equity-tile {
+  font-family: var(--typography-captions);
   color: var(--color-font-main);
   display: flex;
   flex-wrap: wrap;
@@ -298,6 +300,7 @@ body {
 }
 
 .btn {
+  font-family: var(--typography-captions);
   border-radius: 0.25rem;
   max-width: 12ch;
   min-height: 7vh;

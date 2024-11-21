@@ -11,9 +11,8 @@
 
 /* Base Styles */
 .canvas-items {
+  font-family: var(--typography-captions);
   @apply min-h-screen p-8 bg-[#efdeca];
-  /* display: grid;
-  grid-template-columns: repeat(5, 1fr); */
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;

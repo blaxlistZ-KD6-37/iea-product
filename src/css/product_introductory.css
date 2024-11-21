@@ -140,6 +140,7 @@
 .product-title {
   /* font-family: var(--typography-headings); */
   font-size: 3.5rem;
+  font-family: var(--typography-headings);
   color: var(--color-font-main);
   margin-bottom: 0.5rem;
 }

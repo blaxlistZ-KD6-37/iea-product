@@ -1,4 +1,11 @@
 /* Main Content */
+h2 {
+  font-family: var(--typography-headings);
+}
+
+h3 {
+  font-family: var(--typography-captions);
+}
 #financial-statements {
   display: flex;
   flex-wrap: wrap;
