@@ -3,9 +3,8 @@
     1. Product **[x]**
     2. Target **[x]**
 1. Organization and Business Symposium
-    1. Organization Type
-    1. People and Roles
-    1. Business and Product Analysis
+    1. Organization Type **[x]**
+    1. People and Roles **[x]**
 1. Financial Statements
     1. Income Statement **[x]**
     1. Statement of Changes in Equity **[x]**
