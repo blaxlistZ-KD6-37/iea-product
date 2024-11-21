@@ -1,9 +1,7 @@
 import {
   Chart,
-  ChartData,
   ChartDataset,
   ChartTypeRegistry,
-  LogarithmicScale,
   registerables,
 } from "chart.js";
 import { acc_ob, CalculateItem } from "./utils";
