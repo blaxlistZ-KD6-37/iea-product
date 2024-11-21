@@ -743,6 +743,10 @@ video {
   outline-width: 2px;
 }
 
+.outline-1 {
+  outline-width: 1px;
+}
+
 .outline-orange-300 {
   outline-color: #fdba74;
 }

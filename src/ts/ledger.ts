@@ -2,7 +2,10 @@ import "../css/style.css";
 import { Database_Objects, financial_accounting_t } from "./database_types";
 import util from "./utils";
 
-const financial_accounting_ob = util.FilterDate(util.month);
+const timeline_month = <HTMLElement>document.querySelector(".timeline-wrapper");
+
+let curr_month = 9;
+let financial_accounting_ob = util.FilterDate(curr_month);
 
 // Filtering Unique Names
 const filterUniqueByCategory = (category_type: string): string[] => {
@@ -302,5 +305,22 @@ const appendParentContainer = (): void => {
     appendMainContainer(account_container_main[ndx], account_category[ndx]);
   }
 };
+
+timeline_month.addEventListener("click", (e) => {
+  e.preventDefault();
+  const timeline_child = <HTMLDivElement>e.target;
+  const target_month =
+    parseInt((<string>timeline_child.textContent).trim().slice(6, 7)) + 8;
+
+  curr_month = target_month;
+
+  financial_accounting_ob = util.FilterDate(curr_month);
+
+  account_container_main.forEach((container) => {
+    container.innerHTML = "";
+  });
+
+  appendParentContainer();
+});
 
 appendParentContainer();
