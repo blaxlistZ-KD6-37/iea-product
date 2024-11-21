@@ -116,6 +116,13 @@ header {
   border: 2px solid var(--color-font-main);
   text-align: center;
   cursor: pointer;
+  transition: all ease-out 0.3s;
+}
+
+.timeline-month:hover {
+  background: var(--color-font-main);
+  color: var(--color-font-secondary);
+  transition: all ease-in 0.3s;
 }
 
 .journal-entry {
