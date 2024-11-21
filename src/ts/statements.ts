@@ -1,7 +1,115 @@
 import "../css/style.css";
 import { FilterDate, CalculateItem, month } from "./utils";
 
-const financial_accounting_ob = FilterDate(month);
+const timeline_month = <HTMLElement>document.querySelector(".timeline-wrapper");
+const trial_body = <HTMLTableElement>(
+  document.getElementById("trial-balance-body")
+);
+
+let curr_month = 9;
+let financial_accounting_ob = FilterDate(curr_month);
+
+const resetFinancialStatements = () => {
+  // Clear existing content in financial statements
+  const revenueBody = <HTMLTableElement>document.querySelector(".revenue");
+  const expenseBody = <HTMLTableElement>(
+    document.querySelector(".operating-expense_row")
+  );
+  const assetBody = <HTMLTableElement>document.querySelector(".asset-account");
+  const liabilityRow = <HTMLTableRowElement>(
+    document.querySelector(".liability")
+  );
+  const capitalRow = <HTMLTableRowElement>document.querySelector(".capital");
+
+  // Clear existing rows except header rows
+  while (revenueBody.children.length > 1) {
+    revenueBody.removeChild(<ChildNode>revenueBody.lastChild);
+  }
+  while (expenseBody.children.length > 1) {
+    expenseBody.removeChild(<ChildNode>expenseBody.lastChild);
+  }
+  while (assetBody.firstChild) {
+    assetBody.removeChild(assetBody.firstChild);
+  }
+
+  // Clear liability rows
+  liabilityRow.innerHTML = "";
+
+  // Reset capital amount and net income
+  const capitalAmount = <HTMLTableCellElement>capitalRow.lastElementChild;
+  capitalAmount.textContent = "₱ 0.00";
+
+  const netIncomeElement = <HTMLTableCellElement>(
+    (
+      (document.querySelector(".net-income") as HTMLElement)
+        .firstElementChild as HTMLElement
+    ).lastElementChild
+  );
+  netIncomeElement.textContent = "₱ 0.00";
+
+  const liabEqElem = <HTMLTableCellElement>(
+    (<HTMLTableRowElement>(
+      (<HTMLTableElement>(
+        (<HTMLTableElement>(
+          (<HTMLDivElement>document.querySelector(".liabilities-equity"))
+            .lastElementChild
+        )).firstElementChild
+      )).firstElementChild
+    )).lastElementChild
+  );
+  liabEqElem.textContent = "₱ 0.00";
+};
+
+const updateAllStatements = () => {
+  // Update dates
+  const statement_date = <NodeListOf<HTMLSpanElement>>(
+    document.querySelectorAll(".current-date")
+  );
+
+  const capital_date = <NodeListOf<HTMLSpanElement>>(
+    document.querySelectorAll(".month-capital")
+  );
+
+  capital_date.forEach((capital) => {
+    capital.textContent = `${new Date(financial_accounting_ob[0].date)
+      .toDateString()
+      .slice(4, 7)}.`;
+  });
+
+  statement_date.forEach((statement) => {
+    const curr_date: string = `${new Date(financial_accounting_ob[0].date)
+      .toDateString()
+      .slice(4, 7)}. ${new Date(financial_accounting_ob[0].date)
+      .toDateString()
+      .slice(11, 15)}`;
+    statement.textContent = curr_date;
+  });
+
+  // Recreate all statements
+  resetFinancialStatements();
+  appendIncomeStatement();
+  appendEquityChange();
+  createBalanceSheet();
+};
+
+timeline_month.addEventListener("click", (e) => {
+  e.preventDefault();
+  const timeline_child = <HTMLDivElement>e.target;
+
+  // Ensure we're clicking on a timeline month div
+  if (!timeline_child.classList.contains("timeline-month")) return;
+
+  const target_month =
+    parseInt((<string>timeline_child.textContent).trim().slice(6, 7)) + 8;
+
+  curr_month = target_month;
+
+  // Update financial_accounting_ob with the new month's data
+  financial_accounting_ob = FilterDate(curr_month);
+
+  // Update all statements
+  updateAllStatements();
+});
 
 const categories: string[] = [
   "Asset",
