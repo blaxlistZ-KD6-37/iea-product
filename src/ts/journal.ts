@@ -2,7 +2,11 @@ import "../css/style.css";
 import { financial_accounting_t } from "./database_types";
 import util from "./utils";
 
-const financial_accounting_ob = util.FilterDate(util.month);
+const timeline_month = <HTMLElement>document.querySelector(".timeline-wrapper");
+const entry = <HTMLElement>document.querySelector(".journal-entry");
+
+let curr_month = 9;
+let financial_accounting_ob = util.FilterDate(curr_month);
 
 type account_sig =
   | "debit_entry"
@@ -95,7 +99,6 @@ const sortByDebit = (accounts: financial_accounting_t[]): void => {
 };
 
 const createEntry = (curr_date: string): void => {
-  const entry = <HTMLElement>document.querySelector(".journal-entry");
   const entry_wrapper: HTMLElement = createEntryWrapper();
   const finance: financial_accounting_t[] = financial_accounting_ob.filter(
     (account) => {
@@ -138,6 +141,8 @@ const createEntry = (curr_date: string): void => {
 };
 
 const appendEntries = (): void => {
+  entry.innerHTML = "";
+
   let dates: string[] = [];
 
   financial_accounting_ob.forEach((value) => {
@@ -152,4 +157,18 @@ const appendEntries = (): void => {
   }
 };
 
+timeline_month.addEventListener("click", (e) => {
+  e.preventDefault();
+  const timeline_child = <HTMLDivElement>e.target;
+  const target_month =
+    parseInt((<string>timeline_child.textContent).trim().slice(6, 7)) + 8;
+
+  curr_month = target_month;
+
+  financial_accounting_ob = util.FilterDate(curr_month);
+
+  appendEntries();
+});
+
+// Initial load
 appendEntries();
