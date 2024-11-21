@@ -183,6 +183,25 @@ tbody tr:hover {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.timeline-month {
+  max-width: 10ch;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  font-size: 1rem;
+  background-color: var(--color-font-secondary);
+  border: 1px solid var(--color-font-main);
+  text-align: center;
+  cursor: pointer;
+  transition: all ease-out 0.3s;
+}
+
+.timeline-month:hover {
+  background: var(--color-font-main);
+  color: var(--color-font-secondary);
+  transition: all ease-in 0.3s;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   #trial-balance {
