@@ -111,10 +111,10 @@ const createMainData = (target: data_acc_t): HTMLDivElement => {
     }
   );
 
-  const data_dates: Date[] = data_account.map((acc) => {
+  const data_dates: (string | Date)[] = data_account.map((acc) => {
     return acc.date;
   });
-  const unique_dates: Date[] = [...new Set(data_dates)];
+  const unique_dates: (string | Date)[] = [...new Set(data_dates)];
 
   unique_dates.forEach((date) => {
     const dat_obj: data_acc_t = {
