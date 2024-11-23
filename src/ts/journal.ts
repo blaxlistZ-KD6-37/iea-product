@@ -62,10 +62,7 @@ const createEntryWrapper = (): HTMLElement => {
     "bg-yellow-100",
     "grid",
     "gap-4",
-    "items-center",
-    "outline",
-    "outline-2",
-    "outline-orange-300"
+    "items-center"
   );
 
   return entry_wrapper;
