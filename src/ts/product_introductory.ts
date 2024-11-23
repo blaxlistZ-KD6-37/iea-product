@@ -15,4 +15,22 @@ let total_capital: number = CalculateItem(
   })
 );
 
-actual_capital_DOCUMENT.textContent = `₱ ${total_capital.toLocaleString()}`;
+actual_capital_DOCUMENT.textContent = `₱ ${total_capital.toLocaleString(
+  "en-US",
+  { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+)}`;
+
+const actual_target_sales_DOCUMENT = <HTMLDivElement>(
+  document.querySelectorAll(".rating-stars")[1]
+);
+
+let total_revenue: number = CalculateItem(
+  acc_ob.filter((account) => {
+    return account.category === "Revenue";
+  })
+);
+
+actual_target_sales_DOCUMENT.textContent = `₱ ${total_revenue.toLocaleString(
+  "en-US",
+  { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+)}`;
