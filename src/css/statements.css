@@ -1,10 +1,10 @@
 :root {
   /* Enhanced color palette - subtle coffee tones */
-  --color-bg-main: #f3e9dc;  /* Lighter cream background */
+  --color-bg-main: #f3e9dc; /* Lighter cream background */
   --color-font-main: #3a2a1f; /* Deeper brown for better contrast */
   --color-font-secondary: #fdfaf6; /* Softer white */
   --color-accent: #8b5e3c; /* Warm coffee accent */
-  
+
   /* Keeping your original typography */
   --typography-headings: "Amatic SC", cursive;
   --typography-body: "Merriweather", serif;
@@ -94,6 +94,7 @@
   color: var(--color-font-secondary);
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(58, 42, 31, 0.1);
+  cursor: pointer;
 }
 
 /* Balance Sheet refinements */
