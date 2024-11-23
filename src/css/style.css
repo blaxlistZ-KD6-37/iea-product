@@ -113,6 +113,23 @@ h6 {
   padding: calc(var(--spacing-unit) * 2);
 }
 
+/* Home Button Styles */
+.home-button {
+  background: #8a6246;
+  padding: 0.75rem;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.home-button:hover {
+  background: #4b3a29;
+  transform: scale(1.1);
+}
+
+.home-icon {
+  fill: var(--color-font-secondary);
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .frameworks {

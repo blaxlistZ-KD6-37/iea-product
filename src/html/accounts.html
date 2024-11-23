@@ -2,65 +2,54 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="description" content="dummy" />
-    <meta name="author" content="blaxlistZ" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Cold Brew Accounting System" />
+    <meta name="author" content="blaxlistZ" />
     <meta http-equiv="refresh" content="4680" />
-    <title>Add Accounts</title>
-    <!-- Cascading Style Sheet -->
+    <title>Add Transactions</title>
     <link rel="stylesheet" href="../css/output.css" />
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="../css/accounts.css" />
-    <!-- CSS.GG -->
-    <!-- <link href="https://css.gg/css" rel="stylesheet" /> -->
-    <!-- Font Awesome -->
     <script
       src="https://kit.fontawesome.com/4f7e7a7341.js"
       crossorigin="anonymous"
     ></script>
-    <!-- Boxicons -->
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
   </head>
   <body>
-    <div class="home p-3 absolute z-50">
-      <a href="/index.html"
-        ><button type="button">
+    <div class="home p-10 absolute z-50">
+      <a href="/index.html">
+        <button type="button" class="home-button">
           <svg
-            class="hover:scale-150 hover:transition-all hover:ease-in ease-out transition-all"
+            class="home-icon"
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
             viewBox="0 0 24 24"
-            style="fill: rgb(112, 83, 49)"
           >
             <path
               d="m21.743 12.331-9-10c-.379-.422-1.107-.422-1.486 0l-9 10a.998.998 0 0 0-.17 1.076c.16.361.518.593.913.593h2v7a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-4h4v4a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-7h2a.998.998 0 0 0 .743-1.669z"
             ></path>
-          </svg></button
-      ></a>
+          </svg>
+        </button>
+      </a>
     </div>
-    <!-- START OF HEADER BAR -->
+
     <header id="header-bar">
-      <section class="bar-b"></section>
-      <section class="bar-a"></section>
-      <section class="bar-a account-bar text-center">
-        <span>Add Accounts</span>
-      </section>
-      <section class="bar-b"></section>
+      <div class="coffee-beans-border"></div>
+      <div class="title-bar">
+        <span>Record Transaction</span>
+      </div>
+      <div class="coffee-beans-border"></div>
     </header>
 
     <main id="main-frame">
-      <div class="account-container text-center">
-        <!-- ACCOUNT HEADING -->
-        <section class="account-type_heading text-center p-3">
+      <div class="account-container">
+        <section class="account-type_heading">
           <span>Chart of Accounts</span>
         </section>
-        <!-- END ACCOUNTING HEADING -->
 
-        <!-- ACCOUNT POST -->
-        <!-- action="http://localhost:8080/A1_/runlive/form" -->
-        <form action="/form" method="post" class="account-post p-5">
+        <form action="/form" method="post" class="account-post">
           <section class="type-wrapper">
             <div class="debit-part">
               <div class="acc-type_n">Debit</div>
@@ -85,10 +74,11 @@
               </div>
             </div>
           </section>
+
           <section class="amount">
-            <div class="acc-type_n">Amount</div>
+            <div class="acc-type_n">Quantity</div>
             <div class="amount-input">
-              <div class="currency text-right">&#8369;</div>
+              <div class="currency">₱</div>
               <input
                 type="number"
                 class="amt"
@@ -100,26 +90,26 @@
               />
             </div>
           </section>
+
           <section class="description">
-            <div class="acc-type_n">Description</div>
+            <div class="acc-type_n">Brew Notes</div>
             <p>
               <input
                 type="text"
                 class="desc"
                 name="desc"
                 required
-                placeholder="Bought supplies on hand."
+                placeholder="Sold fresh batch of cold brew supplies..."
               />
             </p>
           </section>
+
           <section class="accept">
-            <input type="submit" value="Ok" class="ok-btn" />
+            <input type="submit" value="Brew" class="ok-btn" />
           </section>
         </form>
       </div>
-      <!-- END ACCOUNT POST -->
     </main>
-    <!-- TypeScript -->
     <script type="module" src="../ts/accounts.ts"></script>
   </body>
 </html>

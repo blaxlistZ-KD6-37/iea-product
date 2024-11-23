@@ -2,17 +2,23 @@
 @import url("https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Josefin+Slab&family=Merriweather&family=Satisfy&display=swap");
 
 :root {
-  --color-bg-main: #efdeca;
-  --color-font-main: #4b3a29;
-  --color-font-secondary: #fff8d9;
-  --color-accent: #8a6246;
+  --color-bg-main: #2c1810; /* Deep coffee */
+  --color-font-main: #d4a574; /* Caramel */
+  --color-font-secondary: #fff5e6; /* Cream */
+  --color-accent: #8b4513; /* Coffee brown */
+  --color-cold-brew: #1a0f0a; /* Dark cold brew */
+  --color-foam: #f5e6d3; /* Coffee foam */
   --spacing-unit: 8px;
 }
 
 /* Base Styles */
 .canvas-items {
   font-family: var(--typography-captions);
-  @apply min-h-screen p-8 bg-[#efdeca];
+  @apply min-h-screen p-8;
+  background: linear-gradient(135deg, var(--color-bg-main), var(--color-cold-brew));
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(212, 165, 116, 0.1) 10%, transparent 20%),
+    radial-gradient(circle at 90% 80%, rgba(212, 165, 116, 0.1) 15%, transparent 25%);
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
@@ -20,70 +26,76 @@
 
 /* Chart Sections */
 section {
-  @apply bg-[#fff8d9] rounded-lg p-6 shadow-lg;
-  transition: transform 0.3s ease;
+  @apply rounded-lg p-6;
+  background: linear-gradient(to bottom right, var(--color-font-secondary), #fff);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  border: 1px solid rgba(139, 69, 19, 0.2);
 }
 
 section:hover {
-  @apply shadow-xl;
-  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px) scale(1.01);
 }
 
 /* Canvas Styling */
 canvas {
-  @apply mb-8 rounded-md bg-[#fcffe9] p-4;
-  border: 1px solid var(--color-font-main);
+  @apply mb-8 rounded-md p-4;
+  background: linear-gradient(to bottom right, #fcffe9, var(--color-font-secondary));
+  border: 1px solid var(--color-accent);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-/* Section-specific styles */
-.horizontal-analysis {
-  @apply relative;
+/* Section-specific styles with coffee theme */
+.horizontal-analysis::before,
+.vertical-analysis::before,
+.efficiency-ratios::before,
+.profitability-ratios::before {
+  @apply absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full font-bold;
+  background: linear-gradient(135deg, var(--color-accent), var(--color-bg-main));
+  color: var(--color-foam);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .horizontal-analysis::before {
   content: "Horizontal Analysis";
-  @apply absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 
-         bg-[#4b3a29] text-[#fff8d9] rounded-full font-bold;
   font-size: 0.85rem;
-}
-
-.vertical-analysis {
-  @apply relative;
 }
 
 .vertical-analysis::before {
   content: "Vertical Analysis";
-  @apply absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 
-         bg-[#4b3a29] text-[#fff8d9] rounded-full font-bold;
   font-size: 1rem;
-}
-
-.efficiency-ratios {
-  @apply relative;
 }
 
 .efficiency-ratios::before {
   content: "Efficiency Ratios";
-  @apply absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 
-         bg-[#4b3a29] text-[#fff8d9] rounded-full font-bold;
   font-size: 1rem;
-}
-
-.profitability-ratios {
-  @apply relative;
 }
 
 .profitability-ratios::before {
   content: "Profitability Ratios";
-  @apply absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 
-         bg-[#4b3a29] text-[#fff8d9] rounded-full font-bold;
   font-size: 0.85rem;
+}
+
+/* Coffee stain decorative elements */
+section::after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  right: -15px;
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(circle, rgba(139, 69, 19, 0.1) 30%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
   .canvas-items {
     @apply grid-cols-1 gap-12 p-4;
+    background-attachment: fixed;
   }
 
   section::before {
@@ -99,4 +111,24 @@ canvas {
 canvas {
   font-family: "Josefin Slab", serif;
   padding: 0;
+}
+
+/* Additional coffee-themed enhancements */
+section:nth-child(odd)::before {
+  background: linear-gradient(135deg, #8b4513, #2c1810);
+}
+
+section:nth-child(even)::before {
+  background: linear-gradient(135deg, #2c1810, #8b4513);
+}
+
+/* Hover effects for interactivity */
+section:hover::after {
+  transform: scale(1.2);
+  opacity: 0.8;
+  transition: all 0.3s ease;
+}
+
+canvas:hover {
+  box-shadow: inset 0 2px 8px rgba(139, 69, 19, 0.1);
 }
