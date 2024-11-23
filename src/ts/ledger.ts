@@ -3,6 +3,7 @@ import { Database_Objects, financial_accounting_t } from "./database_types";
 import util from "./utils";
 
 const timeline_month = <HTMLElement>document.querySelector(".timeline-wrapper");
+const comma_expression = /,/g;
 
 let curr_month = 9;
 let financial_accounting_ob = util.FilterDate(curr_month);
@@ -90,7 +91,10 @@ const createAccountData = (data_account: data_acc_t): HTMLDivElement => {
   let summation: number = sumForDate(cash);
 
   data_amount.classList.add("date-acc-amount");
-  data_amount.innerHTML = `&#x20B1;${summation.toFixed(2)}`;
+  data_amount.innerHTML = `&#x20B1;${summation.toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })}`;
   data_account_doc.appendChild(data_amount);
 
   const current_date: Date = new Date(cash_type[0].date);
@@ -149,7 +153,10 @@ const createDataSum = (target: data_acc_t): HTMLDivElement => {
   });
 
   const summation: number = sumForDate(amount);
-  data_total.innerHTML = `&#x20B1;${summation.toFixed(2)}`;
+  data_total.innerHTML = `&#x20B1;${summation.toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })}`;
 
   return data_total;
 };
@@ -183,7 +190,8 @@ const createSideWrapperElement = (
 // Balance
 const stringDocToNumeric = (item: HTMLDivElement): number => {
   let string_item = <string>item.textContent;
-  string_item = <string>string_item.slice(1);
+  string_item = <string>string_item.slice(1).replace(comma_expression, "");
+  console.log(string_item);
 
   const numeric_item: number = parseFloat(string_item);
 
@@ -211,12 +219,18 @@ const createBalanceElement = (
     category_type !== "Asset"
       ? numeric_credit - numeric_debit
       : numeric_debit - numeric_credit;
-  balance_amount.innerHTML = `&#x20B1;${account_difference.toFixed(2)}`;
+  balance_amount.innerHTML = `&#x20B1;${account_difference.toLocaleString(
+    "en-US",
+    { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+  )}`;
 
   if (account_difference < 0) {
-    balance_amount.innerHTML = `(&#x20B1;${Math.abs(account_difference).toFixed(
-      2
-    )})`;
+    balance_amount.innerHTML = `(&#x20B1;${Math.abs(
+      account_difference
+    ).toLocaleString("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })})`;
   }
 
   balance.appendChild(balance_amount);

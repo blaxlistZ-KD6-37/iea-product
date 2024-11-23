@@ -115,8 +115,14 @@ const createEntry = (curr_date: string): void => {
     const account_elements: account_entries = createAccountElement(
       finance[temp_ndx].name,
       finance[temp_ndx + 1].name,
-      finance[temp_ndx].amount.toFixed(2),
-      finance[temp_ndx + 1].amount.toFixed(2)
+      finance[temp_ndx].amount.toLocaleString("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }),
+      finance[temp_ndx + 1].amount.toLocaleString("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })
     );
     const block_element: HTMLDivElement[] = createBlockElement();
 

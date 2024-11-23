@@ -10,6 +10,7 @@ const total_wrapper = <HTMLTableElement>(
   document.getElementById("account-total-wrapper")
 );
 
+const comma_expression = /,/g;
 let curr_month = 9;
 let financial_accounting_ob = util.FilterDate(util.month);
 
@@ -62,7 +63,13 @@ const createAccountRow = (
 
   const cells = [
     account,
-    ...data.map((val) => `&#x20B1; ${Math.abs(val).toFixed(2)}`),
+    ...data.map(
+      (val) =>
+        `&#x20B1; ${Math.abs(val).toLocaleString("en-US", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })}`
+    ),
   ];
   cells.forEach((cellData) => {
     const cell = document.createElement("td");

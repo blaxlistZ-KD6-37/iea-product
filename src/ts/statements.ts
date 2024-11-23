@@ -1,13 +1,11 @@
 import "../css/style.css";
-import { FilterDate, CalculateItem, month } from "./utils";
+import { FilterDate, CalculateItem } from "./utils";
 
 const timeline_month = <HTMLElement>document.querySelector(".timeline-wrapper");
-const trial_body = <HTMLTableElement>(
-  document.getElementById("trial-balance-body")
-);
 
 let curr_month = 9;
 let financial_accounting_ob = FilterDate(curr_month);
+const comma_expression: RegExp = /,/g;
 
 const resetFinancialStatements = () => {
   // Clear existing content in financial statements
@@ -171,7 +169,7 @@ const createAccountRow = (
 
   const data_value = <HTMLTableCellElement>document.createElement("td");
   data_value.classList.add("amount");
-  data_value.textContent = `₱ ${account_value.toFixed(2)}`;
+  data_value.textContent = `₱ ${account_value.toLocaleString()}`;
 
   row_data.appendChild(data_name);
   row_data.appendChild(data_value);
@@ -207,7 +205,10 @@ const createStatement = (
   const total_balance_amount: HTMLTableCellElement =
     document.createElement("td");
   total_balance_amount.classList.add("amount");
-  total_balance_amount.innerHTML = `₱ ${total_balance_data.toFixed(2)}`;
+  total_balance_amount.innerHTML = `₱ ${total_balance_data.toLocaleString(
+    "en-US",
+    { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+  )}`;
   items_balance.appendChild(item_cell_name);
   items_balance.appendChild(total_balance_amount);
 
@@ -234,19 +235,29 @@ const appendIncomeStatement = (): void => {
   const rev: number = parseFloat(
     (<string>(
       (<HTMLTableRowElement>income_statement[0].lastElementChild).textContent
-    )).slice(2)
+    ))
+      .slice(2)
+      .replace(comma_expression, "")
   );
 
   const oe: number = parseFloat(
     (<string>(
       (<HTMLTableRowElement>income_statement[1].lastElementChild).textContent
-    )).slice(2)
+    ))
+      .slice(2)
+      .replace(comma_expression, "")
   );
 
   const net: string =
     rev - oe < 0
-      ? `(₱ ${(rev - oe).toFixed(2)})`
-      : `₱ ${(rev - oe).toFixed(2)}`;
+      ? `(₱ ${(rev - oe).toLocaleString("en-US", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })})`
+      : `₱ ${(rev - oe).toLocaleString("en-US", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })}`;
 
   const net_income = (
     (document.querySelector(".net-income") as HTMLElement)
@@ -282,8 +293,8 @@ const appendEquityChange = (): void => {
       .firstElementChild as HTMLElement
   ).lastElementChild as HTMLTableElement;
 
-  const net_income_amt: number = parseFloat(
-    (net_income.textContent as string).slice(2)
+  const net_income_amt = parseFloat(
+    (net_income.textContent as string).slice(2).replace(comma_expression, "")
   );
 
   const withdrawals = financial_accounting_ob.filter((acc) => {
@@ -309,7 +320,10 @@ const appendEquityChange = (): void => {
     trav = <HTMLTableElement>trav.nextElementSibling
   ) {
     const amount_equity = <HTMLTableRowElement>trav.lastElementChild;
-    amount_equity.textContent = `₱ ${equity_totals[ctr].toFixed(2)}`;
+    amount_equity.textContent = `₱ ${equity_totals[ctr].toLocaleString(
+      "en-US",
+      { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+    )}`;
     sum += equity_totals[ctr];
     ctr++;
   }
@@ -318,7 +332,10 @@ const appendEquityChange = (): void => {
     (<HTMLTableElement>equity.lastElementChild).lastElementChild
   );
 
-  end_capital.textContent = `₱ ${sum.toFixed(2)}`;
+  end_capital.textContent = `₱ ${sum.toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })}`;
 };
 
 appendEquityChange();
@@ -363,13 +380,20 @@ const createBalanceSheet = (): void => {
     capital_statement.lastElementChild
   );
   const capital_amount: number = parseFloat(
-    <string>(<string>capital_amount_element.textContent).slice(2)
+    <string>(
+      (<string>capital_amount_element.textContent)
+        .slice(2)
+        .replace(comma_expression, "")
+    )
   );
 
   const capital = <HTMLTableCellElement>(
     (<HTMLTableRowElement>document.querySelector(".capital")).lastElementChild
   );
-  capital.textContent = `₱ ${capital_amount.toFixed(2)}`;
+  capital.textContent = `₱ ${capital_amount.toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })}`;
 
   const liab_eq_elem = <HTMLTableCellElement>(
     (<HTMLTableRowElement>(
@@ -383,7 +407,10 @@ const createBalanceSheet = (): void => {
   );
 
   const liab_eq = liab_total + capital_amount;
-  liab_eq_elem.textContent = `₱ ${liab_eq.toFixed(2)}`;
+  liab_eq_elem.textContent = `₱ ${liab_eq.toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })}`;
 };
 
 createBalanceSheet();
