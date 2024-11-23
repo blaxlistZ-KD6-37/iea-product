@@ -21,4 +21,3 @@
     1. Closing Entries
     1. Others
         1. Accounts Insertion **[x]**
-        1. Design Specifications
