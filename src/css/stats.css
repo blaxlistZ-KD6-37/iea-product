@@ -36,7 +36,7 @@ section {
 
 section:hover {
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
-  transform: translateY(-5px) scale(1.01);
+  /* transform: translateY(-5px) scale(1.01);  */
 }
 
 /* Canvas Styling */

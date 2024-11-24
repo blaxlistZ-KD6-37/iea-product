@@ -37,6 +37,8 @@ const specifyAccountToMonth = (month: number): financial_accounting_t[] => {
   return account;
 };
 
+let active_charts: Record<string, Chart> = {};
+
 const createAccountChart = (
   html_document: HTMLCanvasElement,
   labels_account: string[],
@@ -44,7 +46,12 @@ const createAccountChart = (
   chart_type: keyof ChartTypeRegistry,
   dependent_axis: string = `%`
 ): void => {
-  new Chart(html_document, {
+  const chart_id = html_document.id;
+  if (active_charts[chart_id]) {
+    active_charts[chart_id].destroy();
+  }
+
+  active_charts[chart_id] = new Chart(html_document, {
     type: chart_type,
     data: {
       labels: labels_account,
@@ -190,20 +197,16 @@ const percent_change_chart_DOCUMENT = <HTMLCanvasElement>(
   dollar_change_chart_DOCUMENT.nextElementSibling
 );
 
-type Income_Statement_T = {
-  readonly [index: string]: number;
-  coldbrew_sales: number;
-  cost_of_goods_sold: number;
-  supplies_expense: number;
-  water_expense: number;
-  delivery_expense: number;
-  depreciation_expense_equipments: number;
-  miscallaneous_expense: number;
-};
+const horizontal_analysis_DOCUMENT = <NodeListOf<HTMLDivElement>>(
+  document.querySelectorAll(".horizontal")
+);
 
-const CalculateSpecificAccount = (name: string, month: number): number => {
+const CalculateSpecificAccount = (
+  account_name: string[],
+  month: number
+): number => {
   const specified_account = specifyAccountToMonth(month).filter((account) => {
-    return account.name === name;
+    return account_name.includes(account.name);
   });
 
   if (specified_account.length === 0) {
@@ -213,258 +216,130 @@ const CalculateSpecificAccount = (name: string, month: number): number => {
   return CalculateItem(specified_account);
 };
 
-const IncomeStatementDollarChange = (
-  month_prior: number,
-  month_current: number
-): Income_Statement_T => {
-  const prior_statements: Income_Statement_T = {
-    coldbrew_sales: CalculateSpecificAccount("Coldbrew Sales", month_prior),
-    cost_of_goods_sold: CalculateSpecificAccount(
-      "Cost of Goods Sold",
-      month_prior
-    ),
-    supplies_expense: CalculateSpecificAccount("Supplies Expense", month_prior),
-    water_expense: CalculateSpecificAccount("Water Expense", month_prior),
-    delivery_expense: CalculateSpecificAccount("Delivery Expense", month_prior),
-    depreciation_expense_equipments: CalculateSpecificAccount(
-      "Depreciation Expense - Equipments",
-      month_prior
-    ),
-    salaries_and_wages: CalculateSpecificAccount(
-      "Salaries and Wages",
-      month_prior
-    ),
-    miscallaneous_expense: CalculateSpecificAccount(
-      "Miscallaneous Expense",
-      month_prior
-    ),
-  };
-
-  const current_statements: Income_Statement_T = {
-    coldbrew_sales: CalculateSpecificAccount("Coldbrew Sales", month_current),
-    cost_of_goods_sold: CalculateSpecificAccount(
-      "Cost of Goods Sold",
-      month_current
-    ),
-    supplies_expense: CalculateSpecificAccount(
-      "Supplies Expense",
-      month_current
-    ),
-    water_expense: CalculateSpecificAccount("Water Expense", month_current),
-    delivery_expense: CalculateSpecificAccount(
-      "Delivery Expense",
-      month_current
-    ),
-    depreciation_expense_equipments: CalculateSpecificAccount(
-      "Depreciation Expense - Equipments",
-      month_current
-    ),
-    salaries_and_wages: CalculateSpecificAccount(
-      "Salaries and Wages",
-      month_current
-    ),
-    miscallaneous_expense: CalculateSpecificAccount(
-      "Miscallaneous Expense",
-      month_current
-    ),
-  };
-
-  const dollar_change: Income_Statement_T = {
-    coldbrew_sales: analysis.DollarChange(
-      current_statements.coldbrew_sales,
-      prior_statements.coldbrew_sales
-    ),
-    cost_of_goods_sold: analysis.DollarChange(
-      current_statements.cost_of_goods_sold,
-      prior_statements.cost_of_goods_sold
-    ),
-    supplies_expense: analysis.DollarChange(
-      current_statements.supplies_expense,
-      prior_statements.supplies_expense
-    ),
-    water_expense: analysis.DollarChange(
-      current_statements.water_expense,
-      prior_statements.water_expense
-    ),
-    delivery_expense: analysis.DollarChange(
-      current_statements.delivery_expense,
-      prior_statements.delivery_expense
-    ),
-    depreciation_expense_equipments: analysis.DollarChange(
-      current_statements.depreciation_expense_equipments,
-      prior_statements.depreciation_expense_equipments
-    ),
-    salaries_and_wages: analysis.DollarChange(
-      current_statements.salaries_and_wages,
-      prior_statements.salaries_and_wages
-    ),
-    miscallaneous_expense: analysis.DollarChange(
-      current_statements.miscallaneous_expense,
-      prior_statements.miscallaneous_expense
-    ),
-  };
-
-  return dollar_change;
+type Account_And_Number_T = {
+  name: string;
+  value: number;
 };
 
-const IncomeStatementPercentChange = (
-  month_prior: number,
-  month_current: number
-): Income_Statement_T => {
-  const prior_statements: Income_Statement_T = {
-    coldbrew_sales: CalculateSpecificAccount("Coldbrew Sales", month_prior),
-    cost_of_goods_sold: CalculateSpecificAccount(
-      "Cost of Goods Sold",
-      month_prior
-    ),
-    supplies_expense: CalculateSpecificAccount("Supplies Expense", month_prior),
-    water_expense: CalculateSpecificAccount("Water Expense", month_prior),
-    delivery_expense: CalculateSpecificAccount("Delivery Expense", month_prior),
-    depreciation_expense_equipments: CalculateSpecificAccount(
-      "Depreciation Expense - Equipments",
-      month_prior
-    ),
-    salaries_and_wages: CalculateSpecificAccount(
-      "Salaries and Wages",
-      month_prior
-    ),
-    miscallaneous_expense: CalculateSpecificAccount(
-      "Miscallaneous Expense",
-      month_prior
-    ),
-  };
+const DollarChangeRange = (
+  trends: string[],
+  curr_month: number
+): Account_And_Number_T[] => {
+  const trends_dollar_change: Account_And_Number_T[] = [];
 
-  const dollar_change: Income_Statement_T = IncomeStatementDollarChange(
-    month_prior,
-    month_current
-  );
+  trends.forEach((trend) => {
+    const prior_month_value: number = CalculateSpecificAccount(
+      [trend],
+      curr_month - 1
+    );
 
-  const percent_change = {
-    coldbrew_sales: analysis.PercentChange(
-      prior_statements.coldbrew_sales,
-      dollar_change.coldbrew_sales
-    ),
-    cost_of_goods_sold: analysis.PercentChange(
-      prior_statements.cost_of_goods_sold,
-      dollar_change.cost_of_goods_sold
-    ),
-    supplies_expense: analysis.PercentChange(
-      prior_statements.supplies_expense,
-      dollar_change.supplies_expense
-    ),
-    water_expense: analysis.PercentChange(
-      prior_statements.water_expense,
-      dollar_change.water_expense
-    ),
-    delivery_expense: analysis.PercentChange(
-      prior_statements.delivery_expense,
-      dollar_change.delivery_expense
-    ),
-    depreciation_expense_equipments: analysis.PercentChange(
-      prior_statements.depreciation_expense_equipments,
-      dollar_change.depreciation_expense_equipments
-    ),
-    salaries_and_wages: analysis.PercentChange(
-      prior_statements.salaries_and_wages,
-      dollar_change.salaries_and_wages
-    ),
-    miscallaneous_expense: analysis.PercentChange(
-      prior_statements.miscallaneous_expense,
-      dollar_change.miscallaneous_expense
-    ),
-  };
+    const curr_month_value: number = CalculateSpecificAccount(
+      [trend],
+      curr_month
+    );
 
-  return percent_change;
+    trends_dollar_change.push({
+      name: trend,
+      value: analysis.DollarChange(curr_month_value, prior_month_value),
+    });
+  });
+
+  return trends_dollar_change;
 };
 
-const dollar_changes: Income_Statement_T[] = [];
-const percent_changes: Income_Statement_T[] = [];
+const PercentChangeRange = (
+  trends: string[],
+  curr_month: number
+): Account_And_Number_T[] => {
+  const trends_dollar_change = DollarChangeRange(trends, curr_month);
+  const trends_percent_change: Account_And_Number_T[] = [];
 
-type Income_Changes_T = {
-  coldbrew_sales: number[];
-  cost_of_goods_sold: number[];
-  supplies_expense: number[];
-  water_expense: number[];
-  delivery_expense: number[];
-  depreciation_expense_equipments: number[];
-  miscallaneous_expense: number[];
+  trends.forEach((trend, ndx) => {
+    const prior_month_value: number = CalculateSpecificAccount(
+      [trend],
+      curr_month - 1
+    );
+
+    trends_percent_change.push({
+      name: trend,
+      value: analysis.PercentChange(
+        prior_month_value,
+        trends_dollar_change[ndx].value
+      ),
+    });
+  });
+
+  return trends_percent_change;
 };
 
-const horizontal_dollar: Income_Changes_T = {
-  coldbrew_sales: [],
-  cost_of_goods_sold: [],
-  supplies_expense: [],
-  water_expense: [],
-  delivery_expense: [],
-  depreciation_expense_equipments: [],
-  miscallaneous_expense: [],
+const income_statement_string = [
+  ...new Set(
+    acc_ob
+      .filter((account) => {
+        return account.category === "Revenue" || account.category === "Expense";
+      })
+      .map((account) => {
+        return account.name;
+      })
+  ),
+];
+
+const balance_sheet_string = [
+  ...new Set(
+    acc_ob
+      .filter((account) => {
+        return (
+          account.category === "Asset" ||
+          account.category === "Liability" ||
+          account.category === "Capital"
+        );
+      })
+      .map((account) => {
+        return account.name;
+      })
+  ),
+];
+
+const createDollarChangeDataset = (
+  statement_type: string[]
+): ChartDataset[] => {
+  const dollar_change_statements: ChartDataset[] = [];
+  statement_type.forEach((statement) => {
+    const dollar_values: number[] = [];
+    month_range.forEach((month) => {
+      const dollar_change = DollarChangeRange([statement], month);
+      dollar_change.forEach((change) => {
+        dollar_values.push(change.value);
+      });
+    });
+    dollar_change_statements.push({ label: statement, data: dollar_values });
+  });
+
+  return dollar_change_statements;
 };
 
-const horizontal_percent: Income_Changes_T = {
-  coldbrew_sales: [],
-  cost_of_goods_sold: [],
-  supplies_expense: [],
-  water_expense: [],
-  delivery_expense: [],
-  depreciation_expense_equipments: [],
-  miscallaneous_expense: [],
+const createPercentChangeDataset = (
+  statement_type: string[]
+): ChartDataset[] => {
+  const percent_change_statements: ChartDataset[] = [];
+  statement_type.forEach((statement) => {
+    const percent_values: number[] = [];
+    month_range.forEach((month) => {
+      const percent_change = PercentChangeRange([statement], month);
+      percent_change.forEach((change) => {
+        percent_values.push(change.value);
+      });
+    });
+    percent_change_statements.push({ label: statement, data: percent_values });
+  });
+
+  return percent_change_statements;
 };
-
-month_range.forEach((month, ndx) => {
-  dollar_changes.push(IncomeStatementDollarChange(month - 1, month));
-  horizontal_dollar.coldbrew_sales[ndx] = dollar_changes[ndx].coldbrew_sales;
-  horizontal_dollar.cost_of_goods_sold[ndx] =
-    dollar_changes[ndx].cost_of_goods_sold;
-  horizontal_dollar.delivery_expense[ndx] =
-    dollar_changes[ndx].delivery_expense;
-  horizontal_dollar.depreciation_expense_equipments[ndx] =
-    dollar_changes[ndx].depreciation_expense_equipments;
-  horizontal_dollar.miscallaneous_expense[ndx] =
-    dollar_changes[ndx].miscallaneous_expense;
-  horizontal_dollar.supplies_expense[ndx] =
-    dollar_changes[ndx].supplies_expense;
-  horizontal_dollar.water_expense[ndx] = dollar_changes[ndx].water_expense;
-
-  percent_changes.push(IncomeStatementPercentChange(month - 1, month));
-  horizontal_percent.coldbrew_sales[ndx] = percent_changes[ndx].coldbrew_sales;
-  horizontal_percent.cost_of_goods_sold[ndx] =
-    percent_changes[ndx].cost_of_goods_sold;
-  horizontal_percent.delivery_expense[ndx] =
-    percent_changes[ndx].delivery_expense;
-  horizontal_percent.depreciation_expense_equipments[ndx] =
-    percent_changes[ndx].depreciation_expense_equipments;
-  horizontal_percent.miscallaneous_expense[ndx] =
-    percent_changes[ndx].miscallaneous_expense;
-  horizontal_percent.supplies_expense[ndx] =
-    percent_changes[ndx].supplies_expense;
-  horizontal_percent.water_expense[ndx] = percent_changes[ndx].water_expense;
-});
 
 createAccountChart(
   dollar_change_chart_DOCUMENT,
   label_accounts,
-  [
-    {
-      label: "Coldbrew Sales",
-      data: horizontal_dollar.coldbrew_sales,
-    },
-    {
-      label: "Delivery Expense",
-      data: horizontal_dollar.delivery_expense,
-    },
-    {
-      label: "Depreciation Expense - Equipments",
-      data: horizontal_dollar.depreciation_expense_equipments,
-    },
-    {
-      label: "Miscallaneous Expense",
-      data: horizontal_dollar.miscallaneous_expense,
-    },
-    {
-      label: "Supplies Expense",
-      data: horizontal_dollar.supplies_expense,
-    },
-  ],
+  createDollarChangeDataset(income_statement_string),
   "bar",
   ".00"
 );
@@ -472,30 +347,50 @@ createAccountChart(
 createAccountChart(
   percent_change_chart_DOCUMENT,
   label_accounts,
-  [
-    {
-      label: "Coldbrew Sales",
-      data: horizontal_percent.coldbrew_sales,
-    },
-    {
-      label: "Delivery Expense",
-      data: horizontal_percent.delivery_expense,
-    },
-    {
-      label: "Depreciation Expense - Equipments",
-      data: horizontal_percent.depreciation_expense_equipments,
-    },
-    {
-      label: "Miscallaneous Expense",
-      data: horizontal_percent.miscallaneous_expense,
-    },
-    {
-      label: "Supplies Expense",
-      data: horizontal_percent.supplies_expense,
-    },
-  ],
+  createPercentChangeDataset(income_statement_string),
   "bar"
 );
+
+horizontal_analysis_DOCUMENT.forEach((anal) => {
+  anal.addEventListener("click", (e) => {
+    const current_sibling = <HTMLDivElement>e.currentTarget;
+    const current_sibling_string = (<string>current_sibling.textContent).trim();
+
+    if (current_sibling_string === "Income Statements") {
+      createAccountChart(
+        dollar_change_chart_DOCUMENT,
+        label_accounts,
+        createDollarChangeDataset(income_statement_string),
+        "bar",
+        ".00"
+      );
+
+      createAccountChart(
+        percent_change_chart_DOCUMENT,
+        label_accounts,
+        createPercentChangeDataset(income_statement_string),
+        "bar"
+      );
+    }
+
+    if (current_sibling_string === "Balance Sheets") {
+      createAccountChart(
+        dollar_change_chart_DOCUMENT,
+        label_accounts,
+        createDollarChangeDataset(balance_sheet_string),
+        "bar",
+        ".00"
+      );
+
+      createAccountChart(
+        percent_change_chart_DOCUMENT,
+        label_accounts,
+        createPercentChangeDataset(balance_sheet_string),
+        "bar"
+      );
+    }
+  });
+});
 
 // Vertical Analysis
 const vertical_analysis_chart_DOCUMENT = <HTMLElement>(
@@ -505,133 +400,138 @@ const common_size_percentage_chart_DOCUMENT = <HTMLCanvasElement>(
   vertical_analysis_chart_DOCUMENT.firstElementChild
 );
 
-const IncomeStatementCommonSize = (
-  month_current: number
-): Income_Statement_T => {
-  const current_statements: Income_Statement_T = {
-    coldbrew_sales: CalculateSpecificAccount("Coldbrew Sales", month_current),
-    cost_of_goods_sold: CalculateSpecificAccount(
-      "Cost of Goods Sold",
-      month_current
-    ),
-    supplies_expense: CalculateSpecificAccount(
-      "Supplies Expense",
-      month_current
-    ),
-    water_expense: CalculateSpecificAccount("Water Expense", month_current),
-    delivery_expense: CalculateSpecificAccount(
-      "Delivery Expense",
-      month_current
-    ),
-    depreciation_expense_equipments: CalculateSpecificAccount(
-      "Depreciation Expense - Equipments",
-      month_current
-    ),
-    salaries_and_wages: CalculateSpecificAccount(
-      "Salaries and Wages",
-      month_current
-    ),
-    miscallaneous_expense: CalculateSpecificAccount(
-      "Miscallaneous Expense",
-      month_current
-    ),
-  };
+const vertical_analysis_DOCUMENT = <NodeListOf<HTMLDivElement>>(
+  document.querySelectorAll(".vertical")
+);
 
-  const common_change = {
-    coldbrew_sales: analysis.CommonSizePercentage(
-      current_statements.coldbrew_sales,
-      current_statements.coldbrew_sales
-    ),
-    cost_of_goods_sold: analysis.CommonSizePercentage(
-      current_statements.cost_of_goods_sold,
-      current_statements.coldbrew_sales
-    ),
-    supplies_expense: analysis.CommonSizePercentage(
-      current_statements.supplies_expense,
-      current_statements.coldbrew_sales
-    ),
-    water_expense: analysis.CommonSizePercentage(
-      current_statements.water_expense,
-      current_statements.coldbrew_sales
-    ),
-    delivery_expense: analysis.CommonSizePercentage(
-      current_statements.delivery_expense,
-      current_statements.coldbrew_sales
-    ),
-    depreciation_expense_equipments: analysis.CommonSizePercentage(
-      current_statements.depreciation_expense_equipments,
-      current_statements.coldbrew_sales
-    ),
-    salaries_and_wages: analysis.CommonSizePercentage(
-      current_statements.salaries_and_wages,
-      current_statements.coldbrew_sales
-    ),
-    miscallaneous_expense: analysis.CommonSizePercentage(
-      current_statements.miscallaneous_expense,
-      current_statements.coldbrew_sales
-    ),
-  };
+const CommonSizePercentageRange = (
+  common_size: string[],
+  base: string[],
+  curr_month: number
+): Account_And_Number_T[] => {
+  const common_size_change: Account_And_Number_T[] = [];
+  const base_value = CalculateSpecificAccount(base, curr_month);
 
-  return common_change;
+  common_size.forEach((common) => {
+    const common_size_month: number = CalculateSpecificAccount(
+      [common],
+      curr_month
+    );
+
+    common_size_change.push({
+      name: common,
+      value: analysis.CommonSizePercentage(common_size_month, base_value),
+    });
+  });
+
+  return common_size_change;
 };
 
-const common_size_changes: Income_Statement_T[] = [];
+const createCommonSizeDataset = (
+  statement_type: string[],
+  base: string[]
+): ChartDataset[] => {
+  const common_size_change_statements: ChartDataset[] = [];
 
-const vertical_common_percent: Income_Changes_T = {
-  coldbrew_sales: [],
-  cost_of_goods_sold: [],
-  supplies_expense: [],
-  water_expense: [],
-  delivery_expense: [],
-  depreciation_expense_equipments: [],
-  miscallaneous_expense: [],
+  statement_type.forEach((statement) => {
+    const common_size_values: number[] = [];
+    month_range.forEach((month) => {
+      const common_size_change = CommonSizePercentageRange(
+        [statement],
+        base,
+        month
+      );
+      common_size_change.forEach((change) => {
+        common_size_values.push(change.value);
+      });
+    });
+    common_size_change_statements.push({
+      label: statement,
+      data: common_size_values,
+    });
+  });
+
+  return common_size_change_statements;
 };
 
-month_range.forEach((month, ndx) => {
-  common_size_changes.push(IncomeStatementCommonSize(month));
-  vertical_common_percent.coldbrew_sales[ndx] =
-    common_size_changes[ndx].coldbrew_sales;
-  vertical_common_percent.cost_of_goods_sold[ndx] =
-    common_size_changes[ndx].cost_of_goods_sold;
-  vertical_common_percent.delivery_expense[ndx] =
-    common_size_changes[ndx].delivery_expense;
-  vertical_common_percent.depreciation_expense_equipments[ndx] =
-    common_size_changes[ndx].depreciation_expense_equipments;
-  vertical_common_percent.miscallaneous_expense[ndx] =
-    common_size_changes[ndx].miscallaneous_expense;
-  vertical_common_percent.supplies_expense[ndx] =
-    common_size_changes[ndx].supplies_expense;
-  vertical_common_percent.water_expense[ndx] =
-    common_size_changes[ndx].water_expense;
+const asset_string = [
+  ...new Set(
+    acc_ob
+      .filter((account) => {
+        return account.category === "Asset";
+      })
+      .map((account) => {
+        return account.name;
+      })
+  ),
+];
+
+const liability_and_capital_string = [
+  ...new Set(
+    acc_ob
+      .filter((account) => {
+        return (
+          account.category === "Liability" || account.category === "Capital"
+        );
+      })
+      .map((account) => {
+        return account.name;
+      })
+  ),
+];
+
+const common_size_asset: ChartDataset[] = createCommonSizeDataset(
+  asset_string,
+  asset_string
+);
+
+const common_size_liability_and_capital: ChartDataset[] =
+  createCommonSizeDataset(
+    liability_and_capital_string,
+    liability_and_capital_string
+  );
+
+const common_size_overall: ChartDataset[] = [];
+
+common_size_asset.forEach((common) => {
+  common_size_overall.push(common);
+});
+
+common_size_liability_and_capital.forEach((common) => {
+  common_size_overall.push(common);
 });
 
 createAccountChart(
   common_size_percentage_chart_DOCUMENT,
   label_accounts,
-  [
-    {
-      label: "Coldbrew Sales",
-      data: vertical_common_percent.coldbrew_sales,
-    },
-    {
-      label: "Delivery Expense",
-      data: vertical_common_percent.delivery_expense,
-    },
-    {
-      label: "Depreciation Expense - Equipments",
-      data: vertical_common_percent.depreciation_expense_equipments,
-    },
-    {
-      label: "Miscallaneous Expense",
-      data: vertical_common_percent.miscallaneous_expense,
-    },
-    {
-      label: "Supplies Expense",
-      data: vertical_common_percent.supplies_expense,
-    },
-  ],
+  common_size_overall,
   "bar"
 );
+
+vertical_analysis_DOCUMENT.forEach((anal) => {
+  anal.addEventListener("click", (e) => {
+    const current_sibling = <HTMLDivElement>e.currentTarget;
+    const current_sibling_string = (<string>current_sibling.textContent).trim();
+
+    if (current_sibling_string === "Income Statements") {
+      createAccountChart(
+        common_size_percentage_chart_DOCUMENT,
+        label_accounts,
+        createCommonSizeDataset(income_statement_string, ["Coldbrew Sales"]),
+        "bar"
+      );
+    }
+
+    if (current_sibling_string === "Balance Sheets") {
+      createAccountChart(
+        common_size_percentage_chart_DOCUMENT,
+        label_accounts,
+        common_size_overall,
+        "bar"
+      );
+    }
+  });
+});
 
 // Efficiency Ratios
 const efficiency_ratios_chart_DOCUMENT = <HTMLElement>(
