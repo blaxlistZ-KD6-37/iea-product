@@ -7,14 +7,14 @@ export const DollarChange = (sales_b: number, sales_a: number): number => {
 };
 
 export const PercentChange = (
-  total_sales: number,
+  base_amount: number,
   currency_change: number
 ): number => {
-  if (total_sales === 0) {
+  if (base_amount === 0) {
     return 0;
   }
 
-  const percent_ratio: number = currency_change / total_sales;
+  const percent_ratio: number = currency_change / base_amount;
 
   return percent_ratio * 100;
 };
