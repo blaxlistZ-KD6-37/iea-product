@@ -542,14 +542,6 @@ const total_assets_turnover_chart_DOCUMENT = <HTMLCanvasElement>(
   efficiency_ratios_chart_DOCUMENT.firstElementChild
 );
 
-const inventory_turnover_chart_DOCUMENT = <HTMLCanvasElement>(
-  total_assets_turnover_chart_DOCUMENT.nextElementSibling
-);
-
-const days_sales_inventory_chart_DOCUMENT = <HTMLCanvasElement>(
-  inventory_turnover_chart_DOCUMENT.nextElementSibling
-);
-
 const total_assets_turnover: number[] = [];
 
 month_range.forEach((month) => {

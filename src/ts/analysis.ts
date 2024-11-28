@@ -51,34 +51,6 @@ export const TotalAssetTurnover = (
   return total_assets_turnover;
 };
 
-export const InventoryTurnOver = (
-  cost_of_goods_sold: number,
-  inventory: Account_Position_T
-): number => {
-  if (inventory.beginning_position + inventory.ending_position === 0) {
-    return 0;
-  }
-
-  const inventory_turnover =
-    (2 * cost_of_goods_sold) /
-    (inventory.beginning_position + inventory.ending_position);
-
-  return inventory_turnover;
-};
-
-export const DaySalesInventory = (
-  cost_of_goods_sold: number,
-  ending_inventory: number
-): number => {
-  if (cost_of_goods_sold === 0) {
-    return 0;
-  }
-
-  const days_sales_inventory = ending_inventory / cost_of_goods_sold;
-
-  return days_sales_inventory * 365;
-};
-
 // Profitability Ratios
 export const ProfitMargin = (net_sales: number, net_income: number): number => {
   if (net_sales === 0) {
@@ -109,8 +81,6 @@ export default {
   PercentChange,
   CommonSizePercentage,
   TotalAssetTurnover,
-  InventoryTurnOver,
-  DaySalesInventory,
   ProfitMargin,
   ReturnOnTotalAssets,
 };
