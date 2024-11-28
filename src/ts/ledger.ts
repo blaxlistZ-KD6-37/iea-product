@@ -6,7 +6,9 @@ const timeline_month = <HTMLElement>document.querySelector(".timeline-wrapper");
 const comma_expression = /,/g;
 
 let curr_month = 9;
-let financial_accounting_ob = util.FilterDate(curr_month);
+let financial_accounting_ob = util.FilterDate(curr_month).sort((a, b) => {
+  return new Date(a.date).getTime() - new Date(b.date).getTime();
+});
 
 // Filtering Unique Names
 const filterUniqueByCategory = (category_type: string): string[] => {
@@ -191,7 +193,6 @@ const createSideWrapperElement = (
 const stringDocToNumeric = (item: HTMLDivElement): number => {
   let string_item = <string>item.textContent;
   string_item = <string>string_item.slice(1).replace(comma_expression, "");
-  console.log(string_item);
 
   const numeric_item: number = parseFloat(string_item);
 
