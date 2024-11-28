@@ -86,7 +86,7 @@ const netIncomeByMonth = (month: number): number => {
 
   const total_revenue: number = CalculateItem(
     new_account.filter((account) => {
-      return account.category === "Revenue";
+      return account.category === "Revenue" && account.chart_account < 998;
     })
   );
 
@@ -276,7 +276,10 @@ const income_statement_string = [
   ...new Set(
     acc_ob
       .filter((account) => {
-        return account.category === "Revenue" || account.category === "Expense";
+        return (
+          (account.category === "Revenue" && account.chart_account < 998) ||
+          account.category === "Expense"
+        );
       })
       .map((account) => {
         return account.name;
