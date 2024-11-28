@@ -9,10 +9,10 @@
     1. Income Statement **[x]**
     1. Statement of Changes in Equity **[x]**
     1. Balance Sheet **[x]**
-1. Financial Analysis
-    1. Horizontal Analysis
-    1. Vertical Analysis
-    1. Efficiency Ratios
+1. Financial Analysis **[x]**
+    1. Horizontal Analysis **[x]**
+    1. Vertical Analysis **[x]**
+    1. Efficiency Ratios **[x]**
     1. Profitability Ratios **[x]**
 1. PostScript
     1. Journal Transactions **[x]**
