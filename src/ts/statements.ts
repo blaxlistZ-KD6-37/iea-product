@@ -4,7 +4,9 @@ import { FilterDate, CalculateItem } from "./utils";
 const timeline_month = <HTMLElement>document.querySelector(".timeline-wrapper");
 
 let curr_month = 9;
-let financial_accounting_ob = FilterDate(curr_month);
+let financial_accounting_ob = FilterDate(curr_month).filter((account) => {
+  return account.chart_account < 998;
+});
 const comma_expression: RegExp = /,/g;
 
 const resetFinancialStatements = () => {
@@ -103,7 +105,9 @@ timeline_month.addEventListener("click", (e) => {
   curr_month = target_month;
 
   // Update financial_accounting_ob with the new month's data
-  financial_accounting_ob = FilterDate(curr_month);
+  financial_accounting_ob = FilterDate(curr_month).filter((account) => {
+    return account.chart_account < 998;
+  });
 
   // Update all statements
   updateAllStatements();
@@ -191,9 +195,12 @@ const createStatement = (
       return sale.name == item;
     });
     const total_data = CalculateItem(data);
-    const data_element = createAccountRow(total_data, item, class_name);
-    element_parent.appendChild(data_element);
+    if (total_data !== 0) {
+      const data_element = createAccountRow(total_data, item, class_name);
+      element_parent.appendChild(data_element);
+    }
   });
+
   const items_balance: HTMLTableRowElement = document.createElement("tr");
   items_balance.classList.add(...statement_classes);
   const balance_data = financial_accounting_ob.filter((balance) => {
@@ -282,8 +289,16 @@ const appendEquityChange = (): void => {
   });
 
   const day_n = financial_accounting_ob.filter((acc) => {
+    const today = new Date(acc.date);
+    const total_month = new Date(
+      today.getFullYear(),
+      today.getMonth() + 1,
+      0
+    ).getDate();
+
     return (
-      new Date(acc.date).getDate() > 1 &&
+      today.getDate() > 1 &&
+      today.getDate() < total_month &&
       acc.name === separateAccounts(categories[2])[0]
     );
   });
@@ -362,12 +377,14 @@ const createBalanceSheet = (): void => {
   if (liabilities.length > 0) {
     liabilities.forEach((liability) => {
       const liab_acc = financial_accounting_ob.filter((acc) => {
-        return acc.name == liability;
+        return acc.name == liability && acc.amount !== 0;
       });
       liab_total = CalculateItem(liab_acc);
-      liability_element.appendChild(
-        createAccountRow(liab_total, liability, "liab")
-      );
+      if (liab_total !== 0) {
+        liability_element.appendChild(
+          createAccountRow(liab_total, liability, "liab")
+        );
+      }
     });
   }
 
