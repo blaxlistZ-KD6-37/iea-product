@@ -10,9 +10,10 @@ const total_wrapper = <HTMLTableElement>(
   document.getElementById("account-total-wrapper")
 );
 
-const comma_expression = /,/g;
 let curr_month = 9;
-let financial_accounting_ob = util.FilterDate(util.month);
+let financial_accounting_ob = util.FilterDate(util.month).filter((account) => {
+  return account.chart_account < 998;
+});
 
 timeline_month.addEventListener("click", (e) => {
   e.preventDefault();
@@ -24,7 +25,9 @@ timeline_month.addEventListener("click", (e) => {
   curr_month = target_month;
 
   // Refilter the financial accounting data for the new month
-  financial_accounting_ob = util.FilterDate(curr_month);
+  financial_accounting_ob = util.FilterDate(curr_month).filter((account) => {
+    return account.chart_account < 998;
+  });
 
   // Clear existing rows
   trial_body.innerHTML = "";
