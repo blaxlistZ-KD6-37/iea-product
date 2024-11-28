@@ -6,9 +6,14 @@ const timeline_month = <HTMLElement>document.querySelector(".timeline-wrapper");
 const comma_expression = /,/g;
 
 let curr_month = 9;
-let financial_accounting_ob = util.FilterDate(curr_month).sort((a, b) => {
-  return new Date(a.date).getTime() - new Date(b.date).getTime();
-});
+let financial_accounting_ob = util
+  .FilterDate(curr_month)
+  .sort((a, b) => {
+    return new Date(a.date).getTime() - new Date(b.date).getTime();
+  })
+  .filter((account) => {
+    return account.chart_account < 998;
+  });
 
 // Filtering Unique Names
 const filterUniqueByCategory = (category_type: string): string[] => {
@@ -329,7 +334,14 @@ timeline_month.addEventListener("click", (e) => {
 
   curr_month = target_month;
 
-  financial_accounting_ob = util.FilterDate(curr_month);
+  financial_accounting_ob = util
+    .FilterDate(curr_month)
+    .sort((a, b) => {
+      return new Date(a.date).getTime() - new Date(b.date).getTime();
+    })
+    .filter((account) => {
+      return account.chart_account < 998;
+    });
 
   account_container_main.forEach((container) => {
     container.innerHTML = "";
