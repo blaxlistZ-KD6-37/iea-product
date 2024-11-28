@@ -78,8 +78,16 @@ const credit_child_doc = <HTMLSelectElement>(
   document.querySelector(".account-cred")
 );
 
+const date_DOCUMENT = <HTMLInputElement>document.querySelector(".date");
 const amount_doc = <HTMLInputElement>document.querySelector(".amt");
 const description_doc = <HTMLInputElement>document.querySelector(".desc");
+let input_date = new Date().toISOString();
+
+date_DOCUMENT.addEventListener("change", (e: Event) => {
+  const input = <HTMLInputElement>e.currentTarget;
+  const date_entered = new Date(<Date>input.valueAsDate).toISOString();
+  input_date = date_entered;
+});
 
 account_post_doc.addEventListener("submit", async (e: Event) => {
   e.preventDefault();
@@ -87,12 +95,15 @@ account_post_doc.addEventListener("submit", async (e: Event) => {
   const child_debit = debit_child_doc.value;
   const child_credit = credit_child_doc.value;
 
-  const latest_tab: number = tab_ob[tab_ob.length - 1].transaction_tab_id + 1;
+  const latest_tab: number =
+    trans_detail_ob.length > 0
+      ? tab_ob[tab_ob.length - 1].transaction_tab_id + 1
+      : 1;
   const child_desc: string = description_doc.value;
 
   const trans_tab: transaction_tab_t = {
     transaction_tab_id: latest_tab,
-    date: new Date().toISOString(),
+    date: input_date,
     description: child_desc,
   };
 
@@ -104,7 +115,9 @@ account_post_doc.addEventListener("submit", async (e: Event) => {
   }
 
   const latest_tab_detail: number =
-    trans_detail_ob[trans_detail_ob.length - 1].transaction_detail_id;
+    trans_detail_ob.length > 0
+      ? trans_detail_ob[trans_detail_ob.length - 1].transaction_detail_id + 1
+      : 1;
 
   const debit_id: number = (<account_t>sorted_acc.find((acc) => {
     return acc.name === child_debit;
@@ -142,5 +155,5 @@ account_post_doc.addEventListener("submit", async (e: Event) => {
   await PostDB<transaction_detail_t>("transaction_detail", credit_detail);
 
   account_post_doc.reset();
-  console.log("Inserted transaction submitted successfully");
+  alert("Inserted transaction submitted successfully");
 });

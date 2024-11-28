@@ -80,6 +80,18 @@
             </div>
           </section>
 
+          <section class="date-type text-center p-2">
+            <div class="acc-type_n">Date</div>
+            <p>
+              <input
+                type="date"
+                class="date p-2 rounded-md outline-[#8a6246] outline outline-2 text-center hover:bg-[#8a6246] hover:text-white hover:outline-slate-900"
+                name="date"
+                required
+              />
+            </p>
+          </section>
+
           <section class="amount">
             <div class="acc-type_n">Quantity</div>
             <div class="amount-input">
@@ -92,6 +104,7 @@
                 min="0"
                 max="999999"
                 required
+                step="0.01"
               />
             </div>
           </section>
