@@ -14,7 +14,7 @@ const sorted_acc = account_ob
     return a.chart_account - b.chart_account;
   })
   .filter((acc) => {
-    return acc.chart_account < 998;
+    return acc.chart_account;
   });
 
 // FETCHING ACCOUNTS
