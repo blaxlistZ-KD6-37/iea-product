@@ -8,6 +8,10 @@ export const acc_ob = await api.GetDB<financial_accounting_t[]>(
   "financial_account"
 );
 
+acc_ob.filter((account) => {
+  return account.chart_account < 998;
+});
+
 export const FilterDate = (target_month: number): financial_accounting_t[] => {
   const new_accounting_ob: financial_accounting_t[] = acc_ob.filter((acc) => {
     const account_month: number = new Date(acc.date).getMonth() + 1;
