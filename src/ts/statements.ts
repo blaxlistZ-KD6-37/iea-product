@@ -224,7 +224,7 @@ const appendIncomeStatement = (): void => {
   createStatement(
     ".operating-expense_row",
     categories[4],
-    "Total Operating Expense",
+    "Total Expense",
     "expense",
     ["total", "income-statement"]
   );
