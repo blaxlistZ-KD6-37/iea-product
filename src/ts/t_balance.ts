@@ -45,6 +45,8 @@ function getLastDayOfMonth(yr: number, mo: number): number {
 const acception_accounts: string[] = [
   "Supplies",
   "Supplies Expense",
+  "Raw Materials Expense",
+  "Raw Materials",
   "Accumulated Depreciation - Equipments",
   "Depreciation Expense - Equipments",
   "Accounts Receivable",
