@@ -15,19 +15,43 @@
 .canvas-items {
   font-family: var(--typography-captions);
   @apply min-h-screen p-8;
-  background: linear-gradient(135deg, var(--color-bg-main), var(--color-cold-brew));
-  background-image: 
-    radial-gradient(circle at 10% 20%, rgba(212, 165, 116, 0.1) 10%, transparent 20%),
-    radial-gradient(circle at 90% 80%, rgba(212, 165, 116, 0.1) 15%, transparent 25%);
+  background: linear-gradient(
+    135deg,
+    var(--color-bg-main),
+    var(--color-cold-brew)
+  );
+  background-image: radial-gradient(
+      circle at 10% 20%,
+      rgba(212, 165, 116, 0.1) 10%,
+      transparent 20%
+    ),
+    radial-gradient(
+      circle at 90% 80%,
+      rgba(212, 165, 116, 0.1) 15%,
+      transparent 25%
+    );
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
 }
 
+#dollar-change,
+#percent-change,
+#common-size-percentage,
+#total-asset-turnover,
+#profit-margin,
+#return-on-total-assets {
+  min-height: 11rem;
+}
+
 /* Chart Sections */
 section {
   @apply rounded-lg p-6;
-  background: linear-gradient(to bottom right, var(--color-font-secondary), #fff);
+  background: linear-gradient(
+    to bottom right,
+    var(--color-font-secondary),
+    #fff
+  );
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
@@ -42,7 +66,11 @@ section:hover {
 /* Canvas Styling */
 canvas {
   @apply mb-8 rounded-md p-4;
-  background: linear-gradient(to bottom right, #fcffe9, var(--color-font-secondary));
+  background: linear-gradient(
+    to bottom right,
+    #fcffe9,
+    var(--color-font-secondary)
+  );
   border: 1px solid var(--color-accent);
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
 }
@@ -53,7 +81,11 @@ canvas {
 .efficiency-ratios::before,
 .profitability-ratios::before {
   @apply absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full font-bold;
-  background: linear-gradient(135deg, var(--color-accent), var(--color-bg-main));
+  background: linear-gradient(
+    135deg,
+    var(--color-accent),
+    var(--color-bg-main)
+  );
   color: var(--color-foam);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
@@ -80,13 +112,17 @@ canvas {
 
 /* Coffee stain decorative elements */
 section::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -15px;
   right: -15px;
   width: 60px;
   height: 60px;
-  background: radial-gradient(circle, rgba(139, 69, 19, 0.1) 30%, transparent 70%);
+  background: radial-gradient(
+    circle,
+    rgba(139, 69, 19, 0.1) 30%,
+    transparent 70%
+  );
   border-radius: 50%;
   pointer-events: none;
 }

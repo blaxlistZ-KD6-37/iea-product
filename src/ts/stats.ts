@@ -315,7 +315,15 @@ const createDollarChangeDataset = (
         dollar_values.push(change.value);
       });
     });
-    dollar_change_statements.push({ label: statement, data: dollar_values });
+    const dollar_change_statement: ChartDataset = {
+      label: statement,
+      data: dollar_values,
+    };
+    dollar_change_statement.data.forEach((data) => {
+      if (data !== 0) {
+        dollar_change_statements.push(dollar_change_statement);
+      }
+    });
   });
 
   return dollar_change_statements;
@@ -333,7 +341,15 @@ const createPercentChangeDataset = (
         percent_values.push(change.value);
       });
     });
-    percent_change_statements.push({ label: statement, data: percent_values });
+    const percent_change_statement: ChartDataset = {
+      label: statement,
+      data: percent_values,
+    };
+    percent_change_statement.data.forEach((data) => {
+      if (data !== 0) {
+        percent_change_statements.push(percent_change_statement);
+      }
+    });
   });
 
   return percent_change_statements;
@@ -448,9 +464,14 @@ const createCommonSizeDataset = (
         common_size_values.push(change.value);
       });
     });
-    common_size_change_statements.push({
+    const common_size_statement: ChartDataset = {
       label: statement,
       data: common_size_values,
+    };
+    common_size_statement.data.forEach((data) => {
+      if (data !== 0) {
+        common_size_change_statements.push(common_size_statement);
+      }
     });
   });
 
@@ -507,7 +528,7 @@ common_size_liability_and_capital.forEach((common) => {
 createAccountChart(
   common_size_percentage_chart_DOCUMENT,
   label_accounts,
-  common_size_overall,
+  createCommonSizeDataset(income_statement_string, ["Coldbrew Sales"]),
   "bar"
 );
 
