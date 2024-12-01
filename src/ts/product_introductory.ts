@@ -9,12 +9,12 @@ let total_capital: number = CalculateItem(
     return (
       (account.category === "Revenue" &&
         new Date(account.date).getMonth() ===
-          new Date(2024, 8).getMonth() + 1) ||
+          new Date(2024, 9).getMonth() + 1) ||
       (account.category === "Expense" &&
         new Date(account.date).getMonth() ===
-          new Date(2024, 8).getMonth() + 1) ||
+          new Date(2024, 9).getMonth() + 1) ||
       (account.category === "Capital" &&
-        new Date(account.date).getMonth() === new Date(2024, 8).getMonth() + 1)
+        new Date(account.date).getMonth() === new Date(2024, 9).getMonth() + 1)
     );
   })
 );
@@ -37,4 +37,12 @@ let total_revenue: number = CalculateItem(
 actual_target_sales_DOCUMENT.textContent = `₱ ${total_revenue.toLocaleString(
   "en-US",
   { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+)}`;
+
+const actual_coffee_quantity_sold = <HTMLSpanElement>(
+  document.querySelector(".actual-sold")
+);
+
+actual_coffee_quantity_sold.textContent = `${Math.abs(
+  Math.round(total_revenue / 45)
 )}`;
