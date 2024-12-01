@@ -70,6 +70,21 @@ const createAccountChart = (
   });
 };
 
+const CalculateSpecificAccount = (
+  account_name: string[],
+  month: number
+): number => {
+  const specified_account = specifyAccountToMonth(month).filter((account) => {
+    return account_name.includes(account.name);
+  });
+
+  if (specified_account.length === 0) {
+    return 0;
+  }
+
+  return CalculateItem(specified_account);
+};
+
 // Profitability Ratios
 
 // Profit Margin
@@ -102,13 +117,7 @@ const netIncomeByMonth = (month: number): number => {
 };
 
 const profitMarginByMonth = (month: number): number => {
-  const new_account: financial_accounting_t[] = specifyAccountToMonth(month);
-
-  const total_revenue: number = CalculateItem(
-    new_account.filter((account) => {
-      return account.category === "Revenue";
-    })
-  );
+  const total_revenue = CalculateSpecificAccount(["Coldbrew Sales"], month);
 
   const net_income: number = netIncomeByMonth(month);
 
@@ -155,6 +164,7 @@ month_range.forEach((month, ndx) => {
             return account.category === "Asset";
           })
         );
+
   const final = CalculateItem(
     specifyAccountToMonth(month).filter((account) => {
       return account.category === "Asset";
@@ -200,21 +210,6 @@ const percent_change_chart_DOCUMENT = <HTMLCanvasElement>(
 const horizontal_analysis_DOCUMENT = <NodeListOf<HTMLDivElement>>(
   document.querySelectorAll(".horizontal")
 );
-
-const CalculateSpecificAccount = (
-  account_name: string[],
-  month: number
-): number => {
-  const specified_account = specifyAccountToMonth(month).filter((account) => {
-    return account_name.includes(account.name);
-  });
-
-  if (specified_account.length === 0) {
-    return 0;
-  }
-
-  return CalculateItem(specified_account);
-};
 
 type Account_And_Number_T = {
   name: string;
@@ -355,10 +350,45 @@ const createPercentChangeDataset = (
   return percent_change_statements;
 };
 
+const net_income_dollar_change: ChartDataset = {
+  label: "Net Income",
+  data: [],
+};
+
+const net_income_percent_change: ChartDataset = {
+  label: "Net Income",
+  data: [],
+};
+
+month_range.forEach((month) => {
+  const dollar_change = analysis.DollarChange(
+    netIncomeByMonth(month),
+    netIncomeByMonth(month - 1)
+  );
+  net_income_dollar_change.data.push(dollar_change);
+
+  const percent_change = analysis.PercentChange(
+    netIncomeByMonth(month - 1),
+    dollar_change
+  );
+  net_income_percent_change.data.push(percent_change);
+});
+
+const income_statement_dollar_change = createDollarChangeDataset(
+  income_statement_string
+);
+
+const income_statement_percent_change = createPercentChangeDataset(
+  income_statement_string
+);
+
+income_statement_dollar_change.push(net_income_dollar_change);
+income_statement_percent_change.push(net_income_percent_change);
+
 createAccountChart(
   dollar_change_chart_DOCUMENT,
   label_accounts,
-  createDollarChangeDataset(income_statement_string),
+  income_statement_dollar_change,
   "bar",
   ".00"
 );
@@ -366,7 +396,7 @@ createAccountChart(
 createAccountChart(
   percent_change_chart_DOCUMENT,
   label_accounts,
-  createPercentChangeDataset(income_statement_string),
+  income_statement_percent_change,
   "bar"
 );
 
@@ -379,7 +409,7 @@ horizontal_analysis_DOCUMENT.forEach((anal) => {
       createAccountChart(
         dollar_change_chart_DOCUMENT,
         label_accounts,
-        createDollarChangeDataset(income_statement_string),
+        income_statement_dollar_change,
         "bar",
         ".00"
       );
@@ -387,7 +417,7 @@ horizontal_analysis_DOCUMENT.forEach((anal) => {
       createAccountChart(
         percent_change_chart_DOCUMENT,
         label_accounts,
-        createPercentChangeDataset(income_statement_string),
+        income_statement_percent_change,
         "bar"
       );
     }
@@ -525,10 +555,30 @@ common_size_liability_and_capital.forEach((common) => {
   common_size_overall.push(common);
 });
 
+const net_income_common_size_change: ChartDataset = {
+  label: "Net Income",
+  data: [],
+};
+
+month_range.forEach((month) => {
+  const common_size_change = analysis.CommonSizePercentage(
+    netIncomeByMonth(month),
+    CalculateSpecificAccount(["Coldbrew Sales"], month)
+  );
+  net_income_common_size_change.data.push(common_size_change);
+});
+
+const income_statement_common_size = createCommonSizeDataset(
+  income_statement_string,
+  ["Coldbrew Sales"]
+);
+
+income_statement_common_size.push(net_income_common_size_change);
+
 createAccountChart(
   common_size_percentage_chart_DOCUMENT,
   label_accounts,
-  createCommonSizeDataset(income_statement_string, ["Coldbrew Sales"]),
+  income_statement_common_size,
   "bar"
 );
 
@@ -541,7 +591,7 @@ vertical_analysis_DOCUMENT.forEach((anal) => {
       createAccountChart(
         common_size_percentage_chart_DOCUMENT,
         label_accounts,
-        createCommonSizeDataset(income_statement_string, ["Coldbrew Sales"]),
+        income_statement_common_size,
         "bar"
       );
     }
